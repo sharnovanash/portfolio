@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sharnova Nashra – Portfolio</title>
+
+    <style>
+        html { display: none; background: #0a0a0a; }
+    </style>
+
+    <script>
+        (function() {
+            const PASS = "NYU!!!";
+            if (sessionStorage.getItem("portfolio_auth") === "true") {
+                document.documentElement.style.display = "block";
+            } else {
+                let entry = prompt("Please enter the password to view Sharnova's portfolio:");
+                if (entry === PASS) {
+                    sessionStorage.setItem("portfolio_auth", "true");
+                    document.documentElement.style.display = "block";
+                } else {
+                    alert("Incorrect password. Access denied.");
+                    window.location.reload();
+                }
+            }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <nav class="nav" id="main-nav">
+        <button class="nav-btn active" onclick="showSection('work', event)">Work</button>
+        <button class="nav-btn" onclick="showSection('about', event)">Sharnova</button>
+    </nav>
+
+    <section id="work" class="section active">
+        <div class="hero">
+            <h1>
+                A <span class="highlight">software engineer</span> building creative systems at the intersection of data and technology.
+            </h1>
+            
+            <div class="hero-meta">
+                <span>CS & Econ @ <a href="https://www.nyu.edu" target="_blank">NYU</a></span>
+                <span>Software Engineering Intern @ <a href="#">Headwaters</a></span>
+                <span>Data Engineering Intern @ <a href="#">Jetty</a></span>
+                <span><a href="#" onclick="showSection('about', event); return false;">Contact</a></span>
+            </div>
+
+            <div class="scroll-label">scroll</div>
+        </div>
+
+        <div class="projects">
+            <div class="project-grid">
+                <div class="project-card">
+                    <video autoplay loop muted playsinline>
+                        <source src="HomeScreen.mp4" type="video/mp4">
+                    </video>
+                    <div class="project-info">
+                        <div class="project-title">Podpocalypse: Bottom of the Bowl</div>
+                        <div class="project-tags">Game Development • Unity • C#</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <video autoplay loop muted playsinline>
+                        <source src="chopped.mp4" type="video/mp4">
+                    </video>
+                    <div class="project-info">
+                        <div class="project-title">Chopped: Vegetable Attack</div>
+                        <div class="project-tags">Game Development • Unity • C#</div>
+                    </div>
+                </div>
+
+                <div class="project-card phone-tile">
+                    <img src="food.jpg" class="card-bg" alt="Food Background">
+                    <img src="phone.gif" class="phone-img" alt="SmartEats App Preview">
+                    <div class="project-info">
+                        <div class="project-title">SmartEats: Personalized Meal Plan</div>
+                        <div class="project-tags">Python • ML • App Development</div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <video autoplay loop muted playsinline>
+                        <source src="box.mp4" type="video/mp4">
+                    </video>
+                    <div class="project-info">
+                        <div class="project-title">Green Box: Goal Tracker</div>
+                        <div class="project-tags">App Development • Database Management • UI/UX Design</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section about-section">
+        <div class="about-container">
+            <div class="about-image-stack">
+                <img src="peach.jpg" alt="Peach">
+                <img src="picture.jpg" alt="Sharnova">
+                <img src="nyu.jpg" alt="NYU">
+            </div>
+
+            <div class="about-content">
+                <h2>Hi Again! <span class="fish-swim-dark">𓆝 𓆟 𓆞 𓆝 𓆟</span></h2>
+                <div class="bio-text">
+                    <p>Hi, I’m Sharnova. I’m a software engineer focused on building systems that address real-world problems. I work at the intersection of computer science and economics, applying technical expertise and analytical insight to develop creative tools.</p>
+                    <p>When I’m not crunching data or building algorithms, I’m making video games because I believe the best technology brings people together and sparks excitement.</p>
+                    <p>I am currently studying CS/Econ at NYU and was awarded the Dean’s Undergraduate Research Fund (DURF) Grant for my work on consumer demand forecasting at NYU Stern School of Business.</p>
+                </div>
+
+                <div class="experience-list">
+                    <div class="experience-item">
+                        <span>Undergraduate Research Assistant @ <strong>NYU Stern</strong></span>
+                        <span>Sep 2025 - Present</span>
+                    </div>
+                    <div class="experience-item">
+                        <span>Software Engineering Intern @ <strong>Headwaters</strong></span>
+                        <span>May - Aug 2025</span>
+                    </div>
+                    <div class="experience-item">
+                        <span>Data Engineering Intern @ <strong>Jetty</strong></span>
+                        <span>May - Aug 2024</span>
+                    </div>
+                </div>
+
+                <div class="contact-links">
+                    <a href="mailto:sn4067@nyu.edu">Email</a>
+                    <a href="https://www.linkedin.com/in/sharnova-nashra-7b2059257/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showSection(sectionName, event) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionName).classList.add('active');
+            const nav = document.getElementById('main-nav');
+            if (sectionName === 'about') nav.classList.add('on-light');
+            else nav.classList.remove('on-light');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

@@ -7,15 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div id="password-gate">
-        <div class="gate-content">
-            <input type="password" id="pass-input" placeholder="Password" autofocus>
-            <button onclick="checkPassword()">Enter</button>
-            <p id="error-msg" style="display:none;">Incorrect password</p>
-        </div>
-    </div>
-
-    <div id="portfolio-content" style="display: none;">
+    <div id="portfolio-content">
         <nav class="nav" id="main-nav">
             <button class="nav-btn active" onclick="showSection('work', event)">PROJECTS</button>
             <button class="nav-btn" onclick="showSection('about', event)">&MORE</button>
@@ -50,8 +42,7 @@
                         </div>
                         <div class="project-description">
                             <div class="description-inner">
-                                <p>Pod-pocalypse is a couch party platformer where two peas in a pod jump, bounce, and roll through a vibrant, food-filled world on the verge of collapse. Navigate tricky terrain, avoid hazards, and race through challenging levels as you work together or compete to reach the finish. Timing, coordination, and luck are key to mastering this fast-paced game.
-                                </p>
+                                <p>Pod-pocalypse is a couch party platformer where two peas in a pod jump, bounce, and roll through a vibrant, food-filled world on the verge of collapse. Navigate tricky terrain, avoid hazards, and race through challenging levels as you work together or compete to reach the finish. Timing, coordination, and luck are key to mastering this fast-paced game.</p>
                                 <div class="project-skills">
                                     <span>Unity</span> • <span>C#</span> • <span>Blender</span> • <span>UI/UX Design</span>
                                 </div>
@@ -131,7 +122,7 @@
                             <div class="description-inner">
                                 <p>Green Box turns goal-setting into a game. Set your personal and professional goals, break them down into manageable milestones, and track your progress over time. Celebrate achievements as you level up, stay motivated with visual progress indicators, and build habits that stick. With GreenBox, reaching your goals feels less like a chore and more like an engaging challenge, making personal growth both measurable and enjoyable.</p>
                                 <div class="project-skills">
-                                    <span>React</span> • <span>Python</span> • <span>SQL</span>
+                                    <span>JavaScript</span> • <span>Python</span> • <span>SQL</span> • <span>UI/UX Design</span>
                                 </div>
                             </div>
                         </div>
@@ -180,19 +171,7 @@
     </div>
 
     <script>
-        function checkPassword() {
-            const pass = document.getElementById('pass-input').value;
-            if (pass === "NYU!!!") {
-                document.getElementById('password-gate').style.display = 'none';
-                document.getElementById('portfolio-content').style.display = 'block';
-            } else {
-                const error = document.getElementById('error-msg');
-                error.style.display = 'block';
-                error.style.color = '#ff4444';
-            }
-        }
-
-        document.getElementById('pass-input').addEventListener('keypress', e => { if (e.key === 'Enter') checkPassword(); });
+        // checkPassword logic removed
 
         function showSection(sectionName, event) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -212,14 +191,11 @@
             const slider = card.querySelector('.slider-wrapper');
             const triangle = card.querySelector('.triangle-button');
             
-            // Get slide count from data attribute
             const maxSlides = card.getAttribute('data-slides') ? parseInt(card.getAttribute('data-slides')) : 3;
             
-            // Cycle through states
             sliderStates[stateKey] = (sliderStates[stateKey] + 1) % maxSlides;
             slider.style.transform = `translateX(-${sliderStates[stateKey] * 100}%)`;
             
-            // Auto-play videos when they appear
             const slides = slider.querySelectorAll('.slide-item');
             const currentSlide = slides[sliderStates[stateKey]];
             if (currentSlide.tagName === 'VIDEO') {
@@ -232,7 +208,6 @@
                 triangle.style.transform = "rotate(0deg)";
             } else {
                 card.classList.add('is-sliding');
-                // Flip arrow only on the final slide
                 triangle.style.transform = sliderStates[stateKey] === maxSlides - 1 ? "rotate(180deg)" : "rotate(0deg)";
             }
         }
@@ -262,3 +237,4 @@
         document.getElementById('about').addEventListener('mouseleave', () => { isTrailing = false; school.classList.remove('active'); fishes.forEach(f => { f.style.position = 'relative'; f.style.left = '0'; f.style.top = '0'; }); });
     </script>
 </body>
+</html>

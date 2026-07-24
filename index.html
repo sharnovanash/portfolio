@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sharnova Nashra Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="portfolio-content">
+        <nav class="nav" id="main-nav">
+            <button class="nav-btn active" onclick="showSection('work', event)">PROJECTS</button>
+            <button class="nav-btn" onclick="showSection('about', event)">&MORE</button>
+        </nav>
+
+        <section id="work" class="section active">
+            <div class="hero">
+                <h1 class="spotify-title">SHARNOVA<br>NASHRA</h1>
+                
+                <p class="hero-subtext">
+                    <span class="bracket-highlight">CS & ECONOMICS @ NYU</span> 
+                    <br>
+                    <span class="token">Developing</span> <span class="pill-highlight">creative systems</span><span class="token">within the
+                    <br>
+                    </span> <span class="target-highlight">intersection of data and technology</span>
+                </p>
+                
+                <div class="scroll-label">scroll for projects</div>
+            </div>
+
+            <div class="projects">
+                <div class="project-grid">
+                    <div class="project-card" id="cetos-card" data-gallery-layout="grid" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <img src="pictures/cetos1.jpg" class="slide-item gallery-crop-left">
+                        </div>
+                        <div class="gallery-extra-media" style="display:none;">
+                            <img src="pictures/cetos2.jpg">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Mining, oil and gas, and lithium extraction generate large volumes of wastewater far saltier than seawater, and conventional treatment methods can't economically manage it. Reverse osmosis membranes fail at that salinity, and thermal evaporation demands too much energy to run at scale.</p>
+                                <p>Cetos Water, a Columbia University spinout, is commercializing Temperature Swing Solvent Extraction (TSSE) to close that gap. The process uses a solvent that pulls fresh water out of brine at one temperature and releases it at another, letting it treat brine up to 10x saltier than seawater and turning waste streams that were previously unusable into a source of clean water and recoverable minerals.</p>
+                                <p>The technology was already proven in a controlled lab. The pilot is the next step: a continuously running version testing whether it holds up on real industrial brine, at a scale never run before. I joined as a Data Engineering Intern as the pilot came online, responsible for data engineering, automation, and AI workflow development. I unified two disconnected tracks, an equilibrium modeling codebase and a manual analytical sample workflow, into one pipeline running from lab data through SysCAD process modeling to pilot results and back.</p>
+                                <div class="project-skills">
+                                    <span>Python</span> • <span>C++</span> • <span>SysCAD</span> • <span>SQL</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Cetos Water: Data Engineering Intern</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="Data Management">
+                                <p><strong>Problem:</strong> Data was scattered across inconsistent folder structures, file formats, and naming conventions, with raw and processed data often mixed together.</p>
+                                <p><strong>What I Created:</strong> A standardized data management system with a clean separation between raw and processed data, a database tracking every brine's chemistry, operating conditions, and performance, and a processing engine that flags steady state status, missing values, and lab versus pilot disagreement the moment new data comes in.</p>
+                                <p><strong>Outcome:</strong> Consolidated all experimental data into a single dashboard that became the foundation every later model and analysis was built on, removing the need to manually cross-reference spreadsheets.</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Pilot Data Analysis">
+                                <p><strong>Problem:</strong> Lab scientists and process engineers had no fast way to tell whether pilot performance was tracking or diverging from lab predictions.</p>
+                                <p><strong>What I Created:</strong> Expanded the team's Python codebase to connect lab equilibrium data with pilot scale results, fitting isotherm curves and plotting them on ternary diagrams with confidence bands. The pipeline automatically overlaid incoming pilot data and flagged any run that fell outside the expected range, while tracking solvent to feed ratios, water recovery, salt removal, and solvent loss across brine types.</p>
+                                <p><strong>Outcome:</strong> Real time visibility into whether the pilot was tracking or diverging from lab predictions, instead of a manual comparison.</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Machine Learning">
+                                <p><strong>Problem:</strong> As pilot data accumulated, the team needed to understand not just what was happening, but what was actually driving performance and energy use.</p>
+                                <p><strong>What I Created:</strong> Built models predicting water recovery and salt rejection from brine chemistry and operating conditions, added anomaly detection to catch sensor drift, and ran sensitivity analysis to identify which variables mattered most.</p>
+                                <p><strong>Outcome:</strong> Helped researchers understand what was actually driving performance and catch issues before they affected pilot operations.</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Looking Back">
+                                <p>This was my first internship owning data engineering solo, from organizing years of experimental data and building databases to writing analysis software and learning enough chemistry to communicate with researchers.</p>
+                                <p>What excites me most is how many places this technology could make an impact. Highly concentrated brines show up in mining wastewater, produced water from oil and gas operations, lithium extraction, desalination, and even the enormous cooling systems used by data centers. Watching Cetos grow from laboratory experiments into a working pilot showed me how much potential this technology has to improve water treatment across a wide range of industries.</p>
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Fixed the pipeline before writing more analysis:</strong> Spent the first few weeks auditing the data infrastructure instead of shipping more scripts, since every downstream model depended on lab and pilot data actually being comparable.</li>
+                                        <li><strong>Built flags instead of a dashboard:</strong> Chose automatic threshold-based flagging over a side-by-side comparison view, so a diverging pilot run got caught the same day, not during a scheduled review weeks later.</li>
+                                        <li><strong>Waited on ML until the data could be trusted:</strong> Held off on predictive modeling until steady-state detection and validation were solid, since a model is only as good as the data feeding it.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="lemontree-card" data-slides="3" data-link="https://github.com/Labcoxyzl/MS-CodeToGive-TEAM3" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <img src="pictures/grouppic.jpg" class="slide-item gallery-skip">
+                            <img src="pictures/lemontreemap.jpg" class="slide-item">
+                            <img src="pictures/lemontree2.jpg" class="slide-item">
+                            <img src="pictures/lemontree3.jpg" class="slide-item">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Selected from 2,200+ applicants to compete among the top 100 at Morgan Stanley's Code To Give Hackathon. Built a full-stack platform for Lemontree, a New York City nonprofit that connects people facing food insecurity to nearby food pantries, soup kitchens, and SNAP benefits through a text helpline and online directory. Our tool gave Lemontree's volunteers a way to find high-priority flyering spots on an interactive NYC map, generate branded flyers with QR signup codes, and track their outreach impact.</p>
+                                <p>[CLICK FOR GITHUB]</p>
+                                <div class="project-skills">
+                                    <span>TypeScript</span> • <span>Next.js</span> • <span>Tailwind CSS</span> • <span>FastAPI</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Morgan Stanley Code To Give: Lemontree Volunteer Platform</div>
+                            <div class="project-tags">TypeScript • Next.js • Full-Stack</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="The Problem">
+                                <p>Lemontree exists because most people facing food insecurity never actually use the free food available to them. There are more food pantries in the US than McDonald's locations, but most hungry families don't know how close they are, or run into stigma that keeps them from showing up. Lemontree has spent years fighting that gap with a text helpline and online directory that connects people to verified food pantries and SNAP resources with real human support behind it.</p>
+                                <p>None of that works if people never hear about Lemontree in the first place, and that discovery still runs on old-fashioned, on-the-ground volunteer outreach: flyering neighborhoods block by block. Our team spent several days at Code To Give building the tool that outreach was missing, one that told volunteers exactly where flyering would matter most, got flyers into their hands quickly, and made the effort feel worth tracking.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Building The Platform">
+                                <p><strong>Problem:</strong> Volunteers had no way to know where flyering would actually matter, no fast way to produce flyers on the spot, and no reason to see outreach as anything more than an unlogged errand.</p>
+                                <p><strong>What We Created:</strong> A self-serve platform where volunteers open an interactive NYC map of high-priority flyering areas, generate a branded, print-ready flyer with a QR code for each event, and locate a nearby printer. Once out flyering, the app tracks their route in real time, Strava-style, with photo uploads as proof of participation, in-app messaging, and points feeding a public leaderboard. An admin dashboard gives Lemontree staff oversight across events and community moderation.</p>
+                                <p><strong>Outcome:</strong> A tool that let volunteers organize their own outreach without waiting on a coordinator, freeing Lemontree staff to focus on programs instead of managing logistics by hand.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Architecture">
+                                <p><strong>Frontend:</strong> Next.js and TypeScript with Tailwind and MapLibre for the event map, organized around the volunteer journey: signup, dashboard, events, leaderboard, profile, and a separate admin surface.</p>
+                                <p><strong>Backend:</strong> FastAPI, with route modules mirroring those same features. Flyers render server-side via Jinja2 for consistent, print-ready output. Supabase handles Postgres, auth, and storage; deployed on Vercel.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Looking Back">
+                                <p>What stuck with us most was designing for the volunteers actually doing the work rather than an admin dashboard nobody would open, and making outreach feel motivating enough that people would actually want to track it. This was a strong reminder of how much technology can do when it's built for social good, for a nonprofit whose entire mission is making sure people don't go without help that already exists nearby.</p>
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Built for volunteers before staff:</strong> Prioritized the volunteer-facing map and flyer generator over the admin dashboard, since a great back office doesn't matter if nobody in the field wants to open the app.</li>
+                                        <li><strong>Made outreach visible, not just logged:</strong> Chose Strava-style route tracking and a leaderboard over a plain task list, since a checklist gives volunteers no reason to come back.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="bouquet-card" data-slides="1" data-hide-gallery="true" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <div class="slide-item phone-tile-slide">
+                                <img src="pictures/flowers.jpg" class="card-bg">
+                                <div class="phone-container">
+                                    <video autoplay loop muted playsinline class="phone-img">
+                                        <source src="pictures/bouquet.mov" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Fleur is an iMessage extension built in Swift that lets you design and send custom digital flower arrangements directly within your conversations. Using Apple's Messages Framework, the app embeds an interactive bouquet builder into iMessage, letting you browse, mix, and arrange a collection of blooms in real time. Customize your arrangement, preview it before sending, and deliver a personalized touch straight to someone's messages. No florist required.</p>
+                                <div class="project-skills">
+                                    <span>Swift/Xcode</span> • <span>Figma</span> • <span>UI/UX Design</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Fleur: Send Flowers Over Text</div>
+                            <div class="project-tags">Interactive Mobile • UI/UX Design</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="The Problem">
+                                <p>When volunteering at a hospital, where I learned that fresh flowers were restricted or banned in most units. Standing vase water can grow mold spores, increasing infection risk in ICUs, oncology wards, and transplant units where patients' immune systems are already compromised.</p>
+                                <p>Fleur was my attempt at keeping the gesture without the risk. Sending someone something personal over text usually means a string of words or a generic emoji. Fleur gives that moment something closer to a physical bouquet, arranged and personalized, without either person having to leave the conversation, involve an actual florist, or bring something into a space where real flowers simply aren't allowed.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Building Fleur">
+                                <p><strong>Problem:</strong> Fresh flowers are restricted in most hospital units for infection and allergy reasons, so a gesture that feels universal wasn't available where patients needed it most.</p>
+                                <p><strong>What I Created:</strong> A real iMessage extension built with Apple's Messages Framework, not a separate app someone has to go download. Inside the message compose flow, users browse a collection of blooms, mix and arrange them in real time, preview the finished bouquet, and send it right there in the thread.</p>
+                                <p><strong>Outcome:</strong> A way to send something personal and physical-feeling over text, without leaving the conversation, involving a florist, or bringing something into a space where real flowers aren't allowed.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Architecture">
+                                <p></strong> Swift and Xcode using Apple's Messages Framework, embedding directly into iMessage.</p>
+                            
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Designed in Figma before writing Swift:</strong> Prototyped the layout entirely in Figma first, since the constrained iMessage extension space made typical navigation patterns unusable and needed to be solved visually before any code.</li>
+                                        <li><strong>Built inside iMessage over a standalone app:</strong> Chose to build within Apple's Messages Framework instead of a separate downloadable app, since the whole point depended on it living inside a conversation someone was already having, not adding another app to open.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="chopped-card" data-slides="3" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <video autoplay loop muted playsinline class="slide-item">
+                                <source src="pictures/chopped.mp4" type="video/mp4">
+                            </video>
+                            <img src="pictures/chopped1.jpg" class="slide-item">
+                            <video autoplay loop muted playsinline class="slide-item">
+                                <source src="pictures/chopped2.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>An arcade game that throws players into a kitchen overrun by attacking vegetables. Players must dodge, slice, and strategize while balancing on a tilting platform that shifts in real time based on the position and weight of everything on it. Work together to keep your world upright as the kitchen becomes a battleground. With dynamic enemy patterns and escalating challenges, the game turns everyday cooking into a high-energy experience.</p>
+                                <div class="project-skills">
+                                    <span>Unity</span> • <span>C#</span> • <span>Blender</span> • <span>Substance Painter</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Chopped: Vegetable Attack</div>
+                            <div class="project-tags">Game Development • Unity • C#</div>
+                        </div>
+                    </div>
+
+
+                    <div class="project-card" id="greenbox-card" data-slides="3" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <video autoplay loop muted playsinline class="slide-item">
+                                <source src="pictures/box.mp4" type="video/mp4">
+                            </video>
+                            <img src="pictures/greenbox1.jpg" class="slide-item">
+                            <img src="pictures/greenbox2.jpg" class="slide-item">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Green Box turns goal-setting into a game. Set your personal and professional goals, break them down into manageable milestones, and track your progress over time. Celebrate achievements as you level up, stay motivated with visual progress indicators, and build habits that stick. With GreenBox, reaching your goals feels less like a chore and more like an engaging challenge, making personal growth both measurable and enjoyable.</p>
+                                <div class="project-skills">
+                                    <span>JavaScript</span> • <span>Python</span> • <span>SQL</span> • <span>UI/UX Design</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Green Box: Goal Tracker</div>
+                            <div class="project-tags">App Development • UI/UX Design</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="The Problem">
+                                <p>Most personal goals don't fail because they're unclear, they fail because there's no feedback loop. A to-do list doesn't give you a reason to check in day to day the way a game does. Green Box takes the mechanics that make games motivating (milestones, progress bars, leveling up) and applies them to the goals people actually set for themselves.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Building Green Box">
+                                <p><strong>Problem:</strong> Users set goals but had no consistent feedback loop, so progress that was actually happening felt invisible and easy to abandon.</p>
+                                <p><strong>What I Created:</strong> A goal tracker where users set personal or professional goals, break them into smaller milestones, and track progress over time as they check things off. Hitting milestones triggers visible progress indicators and level-ups, with milestone spacing calibrated so progress feels earned rather than arbitrary.</p>
+                                <p><strong>Outcome:</strong> Growth that's normally invisible, getting a bit better at something over months, turned into something users could actually see happening.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Architecture">
+                                <p><strong>Frontend:</strong> JavaScript, built around the moment of leveling up rather than a generic checklist UI.</p>
+                                <p><strong>Backend:</strong> Python with a SQL database tracking goals, milestones, and progress.</p>
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Calibrated milestones over shipping defaults:</strong> Spent design time tuning milestone spacing instead of using generic checkpoints, since gamification only motivates if progress feels earned, not arbitrary.</li>
+                                        <li><strong>Kept mechanics simple over building deeper game systems:</strong> Focused on milestones and level-ups instead of adding XP curves, badges, or full RPG-style progression, since the goal was building real habits, not building a game.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="smarteats-card" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <div class="slide-item phone-tile-slide gallery-skip">
+                                <img src="pictures/food.jpg" class="card-bg">
+                                <div class="phone-container"><img src="pictures/phone.gif" class="phone-img"></div>
+                            </div>
+                            <img src="pictures/green.jpg" class="slide-item">
+                            <img src="pictures/twophone.jpg" class="slide-item">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>A smart meal-planning service that helps customers get more value from their groceries. Identifies missing ingredients for upcoming meals, simplifies weekly planning, and reduces food waste, making grocery shopping more efficient. With personalized suggestions and easy-to-follow recipes, the service transforms everyday cooking into a seamless experience while helping users save time and money.</p>
+                                <div class="project-skills">
+                                    <span>Python</span> • <span>NumPy</span> • <span>SQL</span> • <span>JavaScript</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Smart Eats: Personalized Meal Plan</div>
+                            <div class="project-tags">Python • ML • App Development</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="The Problem">
+                                <p>Grocery shopping without a real plan almost always ends the same way: ingredients bought for a recipe that never gets cooked, produce forgotten at the back of the fridge, a last-minute switch to takeout because planning a week of meals felt like too much effort. Smart Eats exists to close the gap between what's already in a kitchen and what a week of meals should actually look like.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Building Smart Eats">
+                                <p><strong>Problem:</strong> Users had no fast way to know what they were missing before a grocery trip, and no way to turn what was already on hand into a reason to cook rather than something that quietly went bad.</p>
+                                <p><strong>What I Created:</strong> A meal-planning tool where users log what they already have and what they're planning to cook. Smart Eats flags exactly what's missing before a grocery trip instead of leaving that to memory, and suggests recipes based on what's already on hand.</p>
+                                <p><strong>Outcome:</strong> Grocery shopping driven by an actual plan instead of memory, with ingredients already in the kitchen turned into meals instead of waste.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Architecture">
+                                <p><strong>Frontend:</strong> JavaScript, built around the actual weekly planning flow rather than a generic recipe browser.</p>
+                                <p><strong>Backend:</strong> Python, with NumPy handling the numerical side of ingredient matching and recipe scoring, backed by a SQL database of recipes and ingredients.</p>
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Solved unit normalization before adding more recipes:</strong> Prioritized a reliable unit conversion system over expanding the recipe library, since mismatched units would have broken every downstream suggestion.</li>
+                                        <li><strong>Matched by what's on hand instead of building a browsable catalog:</strong> Chose to surface recipes based on existing ingredients rather than add generic browsing, since the goal was reducing waste, not competing with a recipe app.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="pod-card" data-slides="2" data-hide-gallery="true" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <video autoplay loop muted playsinline class="slide-item crop-top">
+                                <source src="pictures/HomeScreen.mp4" type="video/mp4">
+                            </video>
+                            <img src="pictures/side.jpg" class="slide-item">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Tossed is a couch party platformer where salad ingredients team up to defend their bowl from a swarm of hungry insects. Balance on a tilting salad bowl, dodge waves of bugs, and unleash veggie-powered attacks to protect the seed vault. Work together or turn on each other as the bowl grows more chaotic with every insect that lands. Timing, coordination, and luck are key to mastering this fast-paced game.</p>
+                                <div class="project-skills">
+                                    <span>Unity</span> • <span>C#</span> • <span>Blender</span> • <span>UI/UX Design</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Tossed: Bottom Of The Bowl</div>
+                            <div class="project-tags">Game Development • Unity • C#</div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="blender-card" data-gallery-layout="row" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <video autoplay loop muted playsinline class="slide-item gallery-natural">
+                                <source src="pictures/elephantclip.mp4" type="video/mp4">
+                            </video>
+                            <img src="pictures/8.gif" class="slide-item">
+                            <img src="pictures/ball.gif" class="slide-item">
+                            <img src="pictures/9.gif" class="slide-item">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>One Blender animation every day for 100 days. I'm constantly experimenting with different creative mediums, and I wanted to explore 3D modeling because of its close connection to game development. Each project served as a focused exercise in motion, lighting, texturing, and physics simulation. These are the same fundamentals that make games feel polished, from readable animation and effective lighting to physics that responds convincingly to the player.</p>
+                                <div class="project-skills">
+                                    <span>Blender</span> • <span>3D Animation</span> • <span>Motion Design</span> • <span>Lighting</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">The100DayProject</div>
+                            <div class="project-tags">Blender • 3D Animation</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section about-section">
+
+            <div class="about-container about-hi-again">
+                <div class="about-image-stack">
+                    <div class="image-grid">
+                        <img src="pictures/peach.jpg">
+                        <img src="pictures/ballpit.jpg">
+                        <img src="pictures/dragon.jpg">
+                        <img src="pictures/nyu.jpg">
+                        <img src="pictures/salad.jpg">
+                        <img src="pictures/dog.jpg">
+                        <img src="pictures/walk.jpg">
+                        <img src="pictures/kbbq.jpg">
+                        <img src="pictures/cne.jpg">
+                    </div>
+                </div>
+                <div class="about-content">
+                    <div class="content-wrapper">
+                        <h2 id="about-greeting">Hi Again!</h2>
+                        <div class="bio-text">
+                            <p>I'm Sharnova, a Computer Science & Economics student at NYU building systems that address real-world problems. I'm highly interested in blending data and technical systems with creative design to create tools that solve consumer problems well.</p>
+                            <p>I was awarded the Dean's Undergraduate Research Fund (DURF) Grant for my work on consumer demand forecasting at the NYU Stern School of Business, where I analyze how computational models can predict economic and business decision-making.</p>
+                            <p>Many personal projects are influenced by 1950s Pop Art, which emphasized bold visuals, accessibility, and everyday culture. These principles guide how I convert data into visually compelling interfaces.</p>
+                        </div>
+                        <div class="github-contrib">
+                            <div class="github-contrib-count" id="github-contrib-count"></div>
+                            <a href="https://github.com/sharnovanash" target="_blank" class="github-contrib-card">
+                                <img src="https://ghchart.rshah.org/1DB954/sharnovanash" alt="GitHub contributions graph" class="github-contrib-img">
+                            </a>
+                        </div>
+                        <div class="contact-links">
+                            <a href="mailto:sn4067@nyu.edu">Email</a>
+                            <a href="https://www.linkedin.com/in/sharnova-nashra-7b2059257/" target="_blank">LinkedIn</a>
+                            <div class="status-wrapper">
+                                <div class="scroll-more-hint"></div>
+                                <div class="spotify-attribution">
+                                    <div class="spotify-icon"></div>
+                                    <span>scroll for more</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="extras-section" id="extras-section">
+                <div class="extras-container">
+
+                    <div class="extras-image-stack">
+                        <div class="ball-grid">
+                            <img src="pictures/boastcruise.jpg" alt="">
+                            <img src="pictures/mirror.jpg" alt="">
+                            <img src="pictures/tree.jpg" alt="">
+                            <img src="pictures/robot.jpg" alt="">
+                            <img src="pictures/coney.jpg" alt="">
+                            <img src="pictures/snowangel.jpg" alt="">
+                            <img src="pictures/birthday.jpg" alt="">
+                            <img src="pictures/rockefeller.jpg" alt="">
+                            <div class="ball-grid-tooltip-wrap">
+                                <img src="pictures/milk.jpg" alt="">
+                                <span class="ball-grid-tooltip">DAIRY-FREE MILK ENTHUSIAST!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="extras-content">
+                        <div class="extras-content-wrapper">
+
+                            <div class="extras-header">
+                                <h2 class="extras-title">&amp; More</h2>
+                            </div>
+
+                            <div class="extras-col">
+                                <div class="extras-col-label">Experience</div>
+                                <div class="extras-col-items">
+                                    <div class="extras-item">
+                                        <span class="extras-item-name">Data And Systems Engineering Intern @ <strong>Cetos Water</strong></span>
+                                        <span class="extras-item-meta">2026</span>
+                                    </div>
+                                    <div class="extras-item">
+                                        <span class="extras-item-name">Software Engineering Intern @ <strong>Rhino</strong></span>
+                                        <span class="extras-item-meta">2025</span>
+                                        
+                                    </div>
+                                    <div class="extras-item">
+                                        <span class="extras-item-name">Software Engineering Intern @ <strong>Headwaters</strong></span>
+                                        <span class="extras-item-meta">2024</span>
+                                    </div>
+                                </div>
+                            </div>
+
+    
+
+                            <div class="extras-col" style="margin-top: 36px;">
+                                <div class="extras-col-label">Awards &amp; Recognition</div>
+                                <div class="extras-col-items">
+                                    <div class="extras-item">
+                                        <span class="extras-item-name">Dean's Undergraduate Research Fund (DURF) Grant</span>
+                                        <span class="extras-item-meta">2025</span>
+                                    </div>
+                                    <div class="extras-item">
+                                        <span class="extras-item-name">NYU Violet Internship &amp; Research Award</span>
+                                        <span class="extras-item-meta">2025</span>
+                                    </div>
+                                    <div class="extras-item">
+                                        <span class="extras-item-name">Richard Garnett Memorial Engineering Scholarship</span>
+                                        <span class="extras-item-meta">2024</span>
+                                    </div>
+                                    <div class="extras-item">
+                                        <span class="extras-item-name">AIME Qualifier <span class="extras-item-detail">(Top 2.5% of AMC 10)</span></span>
+                                        <span class="extras-item-meta">2023</span>
+                                    </div>
+                                </div>
+
+                                <div class="extras-col" style="margin-top: 36px;">
+                                    <div class="extras-col-label">Extracurriculars</div>
+                                    <div class="extras-col-items">
+                                        <div class="extras-item">
+                                            <span class="extras-item-name">NYU Stern Undergraduate Research Assistant</span>
+                                            
+                                        </div>
+                                        <div class="extras-item" onclick="window.open('https://imasons.org/ai-incubator/', '_blank')" style="cursor: pointer;">
+                                            <span class="extras-item-name">Infrastructure Masons OCP Capstone Team</span>
+                                           
+                                        </div>
+                                        <div class="extras-item">
+                                            <span class="extras-item-name">NYU Intramural Volleyball Team</span>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <div class="project-detail-overlay" id="project-detail-overlay">
+        <div class="pd-topbar">
+            <button class="pd-back" onclick="closeProjectDetail()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 18l-6-6 6-6"/></svg>
+                Back to Projects
+            </button>
+            <a class="pd-link-top" id="pd-link-top" href="#" target="_blank" style="display:none;">View Project ↗</a>
+        </div>
+
+        <div class="pd-hero">
+            <h1 class="pd-title" id="pd-title"></h1>
+            <p class="pd-subtitle" id="pd-subtitle"></p>
+        </div>
+
+        <div class="pd-meta">
+            <div>
+                <div class="pd-meta-label">Stack</div>
+                <div class="pd-stack-list" id="pd-stack-list"></div>
+            </div>
+            <div>
+                <div class="pd-meta-label">Overview</div>
+                <div class="pd-overview" id="pd-overview"></div>
+            </div>
+        </div>
+
+        <div class="pd-body" id="pd-body">
+            <div class="pd-sidebar" id="pd-sidebar"></div>
+            <div class="pd-content" id="pd-content"></div>
+        </div>
+
+        <div class="pd-full-bleed" id="pd-full-bleed"></div>
+    </div>
+
+    <script>
+        function showSection(sectionName, event) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionName).classList.add('active');
+            const nav = document.getElementById('main-nav');
+            if (sectionName === 'about') nav.classList.add('on-light');
+            else nav.classList.remove('on-light');
+            if (event && event.currentTarget) event.currentTarget.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        const pdOverlay = document.getElementById('project-detail-overlay');
+
+        function openProjectDetail(cardEl) {
+            const title = cardEl.querySelector('.project-title')?.textContent.trim() || '';
+            const tags = cardEl.querySelector('.project-tags')?.textContent.trim() || '';
+            const skillEls = cardEl.querySelectorAll('.project-skills span');
+            const paragraphEls = cardEl.querySelectorAll('.description-inner > p');
+            const link = cardEl.getAttribute('data-link');
+
+            document.getElementById('pd-title').textContent = title;
+            document.getElementById('pd-subtitle').textContent = tags;
+            pdOverlay.setAttribute('data-card', cardEl.id || '');
+
+            document.getElementById('pd-stack-list').innerHTML =
+                Array.from(skillEls).map(s => `<span>${s.textContent}</span>`).join('');
+
+            const overviewParas = Array.from(paragraphEls)
+                .map(p => p.textContent.trim())
+                .filter(t => t && !/^\[CLICK FOR/i.test(t));
+            document.getElementById('pd-overview').innerHTML =
+                overviewParas.map(t => `<p>${t}</p>`).join('');
+
+            const linkTop = document.getElementById('pd-link-top');
+            if (link) { linkTop.href = link; linkTop.style.display = 'inline-block'; }
+            else { linkTop.style.display = 'none'; }
+
+            const sidebar = document.getElementById('pd-sidebar');
+            const content = document.getElementById('pd-content');
+            const fullBleed = document.getElementById('pd-full-bleed');
+            const body = document.getElementById('pd-body');
+            sidebar.innerHTML = '';
+            content.innerHTML = '';
+            fullBleed.innerHTML = '';
+
+            const customSections = cardEl.querySelectorAll('.detail-extra-sections .detail-section');
+            customSections.forEach((section, i) => {
+                const navTitle = section.getAttribute('data-nav') || `Section ${i + 1}`;
+                const slug = 'pd-section-' + slugify(navTitle);
+
+                const navLink = document.createElement('a');
+                navLink.href = '#' + slug;
+                navLink.textContent = navTitle;
+                if (i === 0) navLink.classList.add('active');
+                sidebar.appendChild(navLink);
+
+                const sectionEl = document.createElement('div');
+                sectionEl.className = 'pd-section';
+                sectionEl.id = slug;
+                sectionEl.innerHTML = `<div class="pd-section-title">${navTitle}</div>${section.innerHTML}`;
+                content.appendChild(sectionEl);
+            });
+
+            body.style.display = customSections.length ? '' : 'none';
+
+            const media = cardEl.getAttribute('data-hide-gallery') === 'true' ? [] : collectCardMedia(cardEl);
+            if (media.length) {
+                const layout = cardEl.getAttribute('data-gallery-layout');
+                const galleryClass = layout === 'grid' ? 'pd-gallery pd-gallery-grid'
+                    : layout === 'grid-5' ? 'pd-gallery pd-gallery-grid-5'
+                    : layout === 'row' ? 'pd-gallery pd-gallery-row'
+                    : 'pd-gallery';
+
+                const gallerySection = document.createElement('div');
+                gallerySection.className = 'pd-section pd-full-bleed-section';
+                gallerySection.id = 'pd-section-gallery';
+                gallerySection.innerHTML = `<div class="${galleryClass}">${media.map(el => `<div class="pd-gallery-item${el.classList.contains('gallery-natural') ? ' pd-gallery-item-natural' : ''}">${el.outerHTML}</div>`).join('')}</div>`;
+                fullBleed.appendChild(gallerySection);
+            }
+
+            pdOverlay.classList.add('active');
+            pdOverlay.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
+
+            pdOverlay.querySelectorAll('video').forEach(v => { v.currentTime = 0; v.play().catch(() => {}); });
+        }
+
+        function slugify(str) {
+            return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        }
+
+        function closeProjectDetail() {
+            pdOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function collectCardMedia(cardEl) {
+            const wrapper = cardEl.querySelector('.slider-wrapper');
+            const media = [];
+            wrapper.childNodes.forEach(node => {
+                if (node.nodeType !== 1) return;
+                if (node.classList.contains('gallery-skip')) return;
+                if (node.classList.contains('phone-tile-slide')) {
+                    node.querySelectorAll('img, video').forEach(el => media.push(el));
+                } else if (node.tagName === 'IMG' || node.tagName === 'VIDEO') {
+                    media.push(node);
+                }
+            });
+            const extra = cardEl.querySelector('.gallery-extra-media');
+            if (extra) extra.querySelectorAll('img, video').forEach(el => media.push(el));
+            return media;
+        }
+
+        fetch('https://github-contributions-api.jogruber.de/v4/sharnovanash?y=last')
+            .then(res => res.json())
+            .then(data => {
+                const total = Object.values(data.total || {}).reduce((sum, n) => sum + n, 0);
+                const el = document.getElementById('github-contrib-count');
+                if (el && total) el.textContent = `${total.toLocaleString()} contributions in the last year`;
+            })
+            .catch(() => {});
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && pdOverlay.classList.contains('active')) closeProjectDetail();
+        });
+
+        pdOverlay.addEventListener('scroll', () => {
+            const links = pdOverlay.querySelectorAll('.pd-sidebar a');
+            let current = links[0];
+            links.forEach(link => {
+                const section = document.querySelector(link.getAttribute('href'));
+                if (section && pdOverlay.scrollTop >= section.offsetTop - 160) current = link;
+            });
+            links.forEach(l => l.classList.toggle('active', l === current));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sharnova Nashra – Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="portfolio-content">
+        <nav class="nav" id="main-nav">
+            <button class="nav-btn active" onclick="showSection('work', event)">PROJECTS</button>
+            <button class="nav-btn" onclick="showSection('about', event)">&MORE</button>
+        </nav>
+
+        <section id="work" class="section active">
+            <div class="hero">
+                <h1>
+                    A <span class="highlight">software engineer</span> building creative systems at the intersection of data and technology.
+                </h1>
+                <div class="hero-meta">
+                    <span>CS & Econ @ <a href="https://www.nyu.edu" target="_blank">NYU</a></span>
+                    <span>Cybersecurity Intern @ <a href="#">Headwaters</a></span>
+                    <span>Data Engineering Intern @ <a href="#">Jetty</a></span>
+                    <span><a href="#" onclick="showSection('about', event); return false;">Contact</a></span>
+                </div>
+                <div class="scroll-label">scroll for projects</div>
+            </div>
+
+            <div class="projects">
+                <div class="project-grid">
+                    
+                    <div class="project-card" id="pod-card" data-slides="2">
+                        <div class="slider-wrapper">
+                            <video autoplay loop muted playsinline class="slide-item">
+                                <source src="HomeScreen.mp4" type="video/mp4">
+                            </video>
+                            <img src="side.jpg" class="slide-item">
+                        </div>
+                        <div class="slide-toggle-container" onclick="toggleSlider('pod-card', 'ppState')">
+                            <div class="triangle-button"></div>
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Pod-pocalypse is a couch party platformer where two peas in a pod jump, bounce, and roll through a vibrant, food-filled world on the verge of collapse. Navigate tricky terrain, avoid hazards, and race through challenging levels as you work together or compete to reach the finish. Timing, coordination, and luck are key to mastering this fast-paced game.</p>
+                                <div class="project-skills">
+                                    <span>Unity</span> • <span>C#</span> • <span>Blender</span> • <span>UI/UX Design</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Podpocalypse: Bottom of the Bowl</div>
+                            <div class="project-tags">Game Development • Unity • C#</div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="chopped-card" data-slides="3">
+                        <div class="slider-wrapper">
+                            <video autoplay loop muted playsinline class="slide-item">
+                                <source src="chopped.mp4" type="video/mp4">
+                            </video>
+                            <img src="chopped1.jpg" class="slide-item">
+                            <video autoplay loop muted playsinline class="slide-item">
+                                <source src="chopped2.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="slide-toggle-container" onclick="toggleSlider('chopped-card', 'chState')">
+                            <div class="triangle-button"></div>
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>An arcade game that throws players into a kitchen overrun by attacking vegetables. Players must dodge, slice, and strategize while balancing on a tilting platform that shifts in real time based on the position and weight of everything on it. Work together to keep your world upright as the kitchen becomes a battleground. With dynamic enemy patterns and escalating challenges, the game turns everyday cooking into a high-energy experience.</p>
+                                <div class="project-skills">
+                                    <span>Unity</span> • <span>C#</span> • <span>Blender</span> • <span>Substance Painter</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Chopped: Vegetable Attack</div>
+                            <div class="project-tags">Game Development • Unity • C#</div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="smarteats-card" data-slides="3">
+                        <div class="slider-wrapper">
+                            <div class="slide-item phone-tile-slide">
+                                <img src="food.jpg" class="card-bg">
+                                <div class="phone-container"><img src="phone.gif" class="phone-img"></div>
+                            </div>
+                            <img src="green.jpg" class="slide-item">
+                            <img src="twophone.jpg" class="slide-item">
+                        </div>
+                        <div class="slide-toggle-container" onclick="toggleSlider('smarteats-card', 'seState')">
+                            <div class="triangle-button"></div>
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>A smart meal-planning service that helps customers get more value from their groceries. Identifies missing ingredients for upcoming meals, simplifies weekly planning, and reduces food waste, making grocery shopping more efficient. With personalized suggestions and easy-to-follow recipes, the service transforms everyday cooking into a seamless experience while helping users save time and money.</p>
+                                <div class="project-skills">
+                                    <span>Python</span> • <span>NumPy</span> • <span>SQL</span> • <span>JavaScript</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Smart Eats: Personalized Meal Plan</div>
+                            <div class="project-tags">Python • ML • App Development</div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="greenbox-card" data-slides="3">
+                        <div class="slider-wrapper">
+                            <video autoplay loop muted playsinline class="slide-item">
+                                <source src="box.mp4" type="video/mp4">
+                            </video>
+                            <img src="greenbox1.jpg" class="slide-item">
+                            <img src="greenbox2.jpg" class="slide-item">
+                        </div>
+                        <div class="slide-toggle-container" onclick="toggleSlider('greenbox-card', 'gbState')">
+                            <div class="triangle-button"></div>
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Green Box turns goal-setting into a game. Set your personal and professional goals, break them down into manageable milestones, and track your progress over time. Celebrate achievements as you level up, stay motivated with visual progress indicators, and build habits that stick. With GreenBox, reaching your goals feels less like a chore and more like an engaging challenge, making personal growth both measurable and enjoyable.</p>
+                                <div class="project-skills">
+                                    <span>JavaScript</span> • <span>Python</span> • <span>SQL</span> • <span>UI/UX Design</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Green Box: Goal Tracker</div>
+                            <div class="project-tags">App Development • UI/UX Design</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section about-section">
+            <div class="about-container">
+                <div class="about-image-stack">
+                    <div class="image-grid">
+                        <img src="peach.jpg">
+                        <img src="ballpit.jpg">
+                        <img src="dragon.jpg">
+                        <img src="nyu.jpg">
+                        <img src="salad.jpg">
+                        <img src="dog.jpg">
+                        <img src="coney.jpg">
+                        <img src="kbbq.jpg">
+                        <img src="cne.jpg">
+                    </div>
+                </div>
+                <div class="about-content">
+                    <div class="content-wrapper">
+                        <h2 id="about-greeting">Hi Again! <span class="fish-school" id="fish-school"><span class="fish">𓆝</span><span class="fish">𓆟</span><span class="fish">𓆞</span></span></h2>
+                        <div class="bio-text">
+                            <p>Hi, I’m Sharnova. I’m a software engineer focused on building systems that address real-world problems. I work at the intersection of computer science and economics, applying technical expertise and analytical insight to develop creative tools.</p>
+                            <p>When I’m not crunching data or building algorithms, I’m making video games because I believe the best technology brings people together and sparks excitement.</p>
+                            <p>I am currently studying CS & Econ at NYU and was awarded the Dean’s Undergraduate Research Fund (DURF) Grant for my work on consumer demand forecasting at NYU Stern School of Business.</p>
+                        </div>
+                        <div class="experience-list">
+                            <div class="experience-item"><span>Undergraduate Research Assistant @ <strong>NYU Stern</strong></span><span>Sep 2025 - Present</span></div>
+                            <div class="experience-item"><span>Cybersecurity Intern @ <strong>Headwaters</strong></span><span>May - Aug 2025</span></div>
+                            <div class="experience-item"><span>Data Engineering Intern @ <strong>Jetty</strong></span><span>May - Aug 2024</span></div>
+                        </div>
+                        <div class="contact-links">
+                            <a href="mailto:sn4067@nyu.edu">Email</a>
+                            <a href="https://www.linkedin.com/in/sharnova-nashra-7b2059257/" target="_blank">LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // checkPassword logic removed
+
+        function showSection(sectionName, event) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionName).classList.add('active');
+            const nav = document.getElementById('main-nav');
+            if (sectionName === 'about') nav.classList.add('on-light');
+            else nav.classList.remove('on-light');
+            if (event && event.currentTarget) event.currentTarget.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        let sliderStates = { ppState: 0, chState: 0, seState: 0, gbState: 0 };
+
+        function toggleSlider(cardId, stateKey) {
+            const card = document.getElementById(cardId);
+            const slider = card.querySelector('.slider-wrapper');
+            const triangle = card.querySelector('.triangle-button');
+            
+            const maxSlides = card.getAttribute('data-slides') ? parseInt(card.getAttribute('data-slides')) : 3;
+            
+            sliderStates[stateKey] = (sliderStates[stateKey] + 1) % maxSlides;
+            slider.style.transform = `translateX(-${sliderStates[stateKey] * 100}%)`;
+            
+            const slides = slider.querySelectorAll('.slide-item');
+            const currentSlide = slides[sliderStates[stateKey]];
+            if (currentSlide.tagName === 'VIDEO') {
+                currentSlide.currentTime = 0;
+                currentSlide.play();
+            }
+
+            if (sliderStates[stateKey] === 0) {
+                card.classList.remove('is-sliding');
+                triangle.style.transform = "rotate(0deg)";
+            } else {
+                card.classList.add('is-sliding');
+                triangle.style.transform = sliderStates[stateKey] === maxSlides - 1 ? "rotate(180deg)" : "rotate(0deg)";
+            }
+        }
+
+        // Fish Following Logic
+        const school = document.getElementById('fish-school');
+        const fishes = document.querySelectorAll('.fish');
+        let isTrailing = false; let positions = []; const delay = 8; 
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isTrailing) return;
+            positions.unshift({ x: e.clientX, y: e.clientY });
+            if (positions.length > fishes.length * delay + 1) positions.pop();
+            fishes.forEach((fish, index) => {
+                const posIndex = index * delay;
+                if (positions[posIndex]) {
+                    const pos = positions[posIndex];
+                    fish.style.position = 'fixed';
+                    fish.style.left = (pos.x - 12) + 'px';
+                    fish.style.top = (pos.y - 12) + 'px';
+                    fish.style.zIndex = "9999";
+                }
+            });
+        });
+
+        document.getElementById('about-greeting').addEventListener('mouseenter', () => { isTrailing = true; school.classList.add('active'); positions = []; });
+        document.getElementById('about').addEventListener('mouseleave', () => { isTrailing = false; school.classList.remove('active'); fishes.forEach(f => { f.style.position = 'relative'; f.style.left = '0'; f.style.top = '0'; }); });
+    </script>
+</body>
+</html>
+-->

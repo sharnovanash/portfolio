@@ -21,7 +21,7 @@
                 <h1 class="spotify-title">SHARNOVA<br>NASHRA</h1>
                 
                 <p class="hero-subtext">
-                    <span class="bracket-highlight">CS & ECONOMICS @ NYU</span> 
+                    <span class="bracket-highlight">COMPUTER SCIENCE & ECONOMICS @ NYU</span> 
                     <br>
                     <span class="token">Developing</span> <span class="pill-highlight">creative systems</span><span class="token">within the
                     <br>
@@ -206,13 +206,11 @@
                     </div>
 
 
-                    <div class="project-card" id="greenbox-card" data-slides="3" onclick="openProjectDetail(this)">
+                    <div class="project-card" id="greenbox-card" onclick="openProjectDetail(this)">
                         <div class="slider-wrapper">
-                            <video autoplay loop muted playsinline class="slide-item">
+                            <video autoplay loop muted playsinline class="slide-item gallery-skip">
                                 <source src="pictures/box.mp4" type="video/mp4">
                             </video>
-                            <img src="pictures/greenbox1.jpg" class="slide-item">
-                            <img src="pictures/greenbox2.jpg" class="slide-item">
                         </div>
                         <div class="project-description">
                             <div class="description-inner">
@@ -337,6 +335,173 @@
                         </div>
                     </div>
 
+                    <div class="project-card" id="climate-card" data-slides="9" data-link="https://docs.google.com/presentation/d/1HIExQPwsGLpO9c-arP4yWbNSZHmUSoJerGhuw8iaeaA/edit?usp=sharing" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <img src="pictures/climate-regression-facets.png" class="slide-item">
+                        </div>
+                        <div class="gallery-extra-media" style="display:none;">
+                            <img src="pictures/climate1.png" class="gallery-natural">
+                            <img src="pictures/climate2.png" class="gallery-natural">
+                            <img src="pictures/climate3.png" class="gallery-natural">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>The global reliance on solid fuels for household energy is a leading cause of preventable respiratory disease. I joined two WHO datasets to quantify how clean fuel access relates to air pollution attributable mortality, country by country.</p>
+                                <div class="project-skills">
+                                    <span>Python</span> • <span>SQL</span> • <span>statsmodels</span> • <span>seaborn</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Clean Fuel Access & Air Pollution Mortality</div>
+                            <div class="project-tags">Data Analysis • Python • Statistical Modeling</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="The Problem">
+                                <p>WHO publishes clean fuel access and air pollution mortality as separate datasets, with no analysis tying them together at the country/year level. I joined <strong>cleanFuelAndTech.csv</strong> and <strong>airPollutionDeathRate.csv</strong> on Country and Year to answer: how does clean fuel access relate to mortality per 100,000, standardized so countries of different sizes are comparable?</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Tools & What Each Did">
+                                <ul>
+                                    <li><strong>Python (pandas, NumPy):</strong> Cleaning both datasets, parsing WHO's composite confidence interval strings, building the country to continent mapping.</li>
+                                    <li><strong>SQL:</strong> Joining mortality and fuel access on Country and Year, after Jupyter's native merge kept failing.</li>
+                                    <li><strong>statsmodels:</strong> Running and diagnosing all three OLS regressions, including residual checks like skew, kurtosis, and the Durbin Watson statistic.</li>
+                                    <li><strong>seaborn / matplotlib:</strong> Exploratory boxplots and final model visualizations.</li>
+                                </ul>
+                            </div>
+
+                            <div class="detail-section" data-nav="Cleaning & Joining the Data">
+                                <p><strong>Problem:</strong> WHO stores mortality as a composite string, like <code>"15.2 [12.1 to 18.4]"</code>, unusable for a regression as is.</p>
+                                <p><strong>What I Created:</strong> A parser to isolate the point estimate, a missing value strategy, and an IQR based outlier filter (1.5&times;).</p>
+                                <div class="pd-code">
+                                    <div class="pd-code-label">Python: String Parsing</div>
+                                    <pre>def extract_primary_value(val):
+    if pd.isna(val):
+        return np.nan
+    try:
+        # Extracts &quot;15.2&quot; from &quot;15.2 [10-20]&quot;
+        first_part = str(val).split()[0]
+        clean_val = &#x27;&#x27;.join(c for c in first_part if c.isdigit() or c == &#x27;.&#x27;)
+        return float(clean_val)
+    except:
+        return np.nan</pre>
+                                </div>
+                                <p>Built a country to continent lookup by hand to fix naming mismatches, then merged in Jupyter first, hit tooling issues, and moved the join to SQL in VSCode instead.</p>
+                                <div class="pd-code">
+                                    <div class="pd-code-label">SQL: Joining Mortality, Fuel Access & Continent</div>
+                                    <pre>SELECT
+    m.Location,
+    m.Period AS Year,
+    c.Continent,
+    m.Value AS Mortality_Rate,
+    f.Value AS Clean_Fuel_Access
+FROM Air_Pollution_Mortality m
+JOIN Clean_Fuel_Access f
+    ON m.Location = f.Location
+    AND m.Period = f.Period
+LEFT JOIN Continent_Map c
+    ON m.Location = c.Country
+WHERE m.Value IS NOT NULL
+    AND f.Value IS NOT NULL;</pre>
+                                </div>
+                                <p><strong>Outcome:</strong> A single clean table, 6,444 rows, ready for modeling.</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Exploring the Data">
+                                <p>Boxplots by continent surfaced a clear divide before any modeling: Africa's median death rate (15.47/100k) is roughly 3&times; Europe's (5.25/100k), with Africa and Asia showing the widest interquartile ranges. Fuel access mirrors this: Europe sits near 100% almost uniformly, while Africa and Oceania span the full range.</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Model 1: Linear Regression">
+                                <p><strong>H&#8320;:</strong> No relationship between clean fuel usage and mortality. <strong>H&#8321;:</strong> Higher adoption is associated with lower mortality.</p>
+                                <div class="pd-code">
+                                    <div class="pd-code-label">Python (statsmodels): OLS Regression</div>
+                                    <pre>X = df_model[&#x27;Fuel_Access&#x27;]
+y = df_model[&#x27;Death_Rate&#x27;]
+X = sm.add_constant(X)
+model = sm.OLS(y, X).fit()
+print(model.summary())
+
+sns.regplot(x=&#x27;Fuel_Access&#x27;, y=&#x27;Death_Rate&#x27;, data=df_model, scatter_kws={&#x27;alpha&#x27;: 0.4})
+plt.title(&quot;Clean Fuel Access vs Air Pollution Mortality&quot;)
+plt.xlabel(&quot;Clean Fuel Access (%)&quot;)
+plt.ylabel(&quot;Death Rate (per 100,000)&quot;)</pre>
+                                </div>
+                                <div class="pd-stats">
+                                    <div class="pd-stat"><div class="pd-stat-label">Coefficient</div><div class="pd-stat-value">&minus;0.397</div></div>
+                                    <div class="pd-stat"><div class="pd-stat-label">p-value</div><div class="pd-stat-value">&lt; 0.001</div></div>
+                                    <div class="pd-stat"><div class="pd-stat-label">R&sup2;</div><div class="pd-stat-value">0.137</div></div>
+                                </div>
+                                <p>Significant: each 10 point gain in fuel access predicts about 4 fewer deaths per 100,000. But skew (2.53) and kurtosis (12.4) in the residuals were too extreme to trust a constant effect at face value, which motivated the next two models.</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Model 2: Logarithmic Model">
+                                <p>Tests for diminishing returns instead of a constant slope.</p>
+                                <div class="pd-code">
+                                    <div class="pd-code-label">Python (statsmodels): Log Transformed Regression</div>
+                                    <pre>df_model[&#x27;Log_Fuel_Access&#x27;] = np.log1p(df_model[&#x27;Fuel_Access&#x27;])
+X_log = sm.add_constant(df_model[&#x27;Log_Fuel_Access&#x27;])
+y = df_model[&#x27;Death_Rate&#x27;]
+log_model = sm.OLS(y, X_log).fit()
+print(log_model.summary())
+
+fuel_range = np.linspace(X.min(), X.max(), 100)
+log_range = sm.add_constant(np.log1p(fuel_range))
+predicted = log_model.predict(log_range)
+
+plt.scatter(X, y, alpha=0.15, color=&quot;#003366&quot;)
+plt.plot(fuel_range, predicted, color=&quot;black&quot;, linewidth=2)
+plt.title(&quot;Logarithmic Model: Clean Fuel Access vs Mortality&quot;)</pre>
+                                </div>
+                                <div class="pd-stats">
+                                    <div class="pd-stat"><div class="pd-stat-label">Coefficient</div><div class="pd-stat-value">&minus;12.99</div></div>
+                                    <div class="pd-stat"><div class="pd-stat-label">p-value</div><div class="pd-stat-value">&lt; 0.001</div></div>
+                                    <div class="pd-stat"><div class="pd-stat-label">R&sup2;</div><div class="pd-stat-value">0.118</div></div>
+                                </div>
+                                <p>The curve drops sharply between 0 and 20% access, then flattens. Its R&sup2; is actually lower than the linear model's, so the case rests on curve shape and diagnostics, not fit alone. A rigorous comparison would use AIC/BIC (see Limitations).</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Model 3: Multivariate Regression">
+                                <p>Nearly every extreme outlier above 200 deaths/100k was African. I added continent as a control, with Africa as baseline, to test whether that was really about fuel access or geography.</p>
+                                <div class="pd-code">
+                                    <div class="pd-code-label">Python (statsmodels): Multivariate Regression</div>
+                                    <pre>df_multi = pd.get_dummies(df[[&#x27;Fuel_Access&#x27;, &#x27;Death_Rate&#x27;, &#x27;Continent&#x27;]],
+                           columns=[&#x27;Continent&#x27;], drop_first=True)
+
+X_multi = sm.add_constant(df_multi.drop(columns=[&#x27;Death_Rate&#x27;]))
+y = df_multi[&#x27;Death_Rate&#x27;]
+multi_model = sm.OLS(y, X_multi.astype(float)).fit()
+print(multi_model.summary())
+
+coefs = multi_model.params.drop(&#x27;const&#x27;).sort_values()
+coefs.plot(kind=&#x27;barh&#x27;, color=&#x27;#003366&#x27;)
+plt.axvline(0, color=&#x27;black&#x27;, linestyle=&#x27;--&#x27;, linewidth=1)
+plt.title(&quot;Impact on Death Rate: Fuel Access vs Regional Factors&quot;)</pre>
+                                </div>
+                                <p>Oceania (&minus;12.5) and North America (&minus;7.2) had far lower mortality than Africa even controlling for fuel access, meaning regional factors like infrastructure and healthcare predict the gap more than fuel access alone.</p>
+                            </div>
+
+                            <div class="detail-section" data-nav="Limitations">
+                                <ul>
+                                    <li><strong>Autocorrelation:</strong> this is panel data, and Durbin Watson sits around 0.43 in both models, well below the 2.0 expected for independent residuals. P-values are likely optimistic; clustering standard errors by country is the right fix.</li>
+                                    <li><strong>Model selection:</strong> the log vs. linear comparison should use AIC/BIC, not just curve shape.</li>
+                                    <li><strong>Inference, not prediction:</strong> no train/test split, so nothing here is validated out of sample.</li>
+                                </ul>
+                            </div>
+
+                            <div class="detail-section" data-nav="Looking Back">
+                                <p>Testing three models instead of stopping at the first significant p-value was the most important decision here. The linear model alone looked done, but its own diagnostics were a signal to keep going, and the log and multivariate models each added something the first story couldn't show. Naming where those models still fall short felt more honest than presenting three clean results in a row.</p>
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Parsed strings before modeling anything</strong>, since every downstream statistic depended on clean floats.</li>
+                                        <li><strong>Treated the linear model's diagnostics as a reason to keep testing</strong>, not a footnote to skip past.</li>
+                                        <li><strong>Used Africa as the baseline deliberately</strong>, so every coefficient reads as "better than the worst off region."</li>
+                                    </ol>
+                                </div>
+                                <p>Next: cluster standard errors by country (highest priority), compare specifications via AIC/BIC, add a time series view of mortality change within countries, and pull in GDP and healthcare data to isolate fuel access from confounders.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -460,6 +625,10 @@
                                     <div class="extras-col-items">
                                         <div class="extras-item">
                                             <span class="extras-item-name">NYU Stern Undergraduate Research Assistant</span>
+                                            
+                                        </div>
+                                        <div class="extras-item" onclick="window.open('https://meet.nyu.edu/sustainability/nyu-tandons-concrete-canoe-team-paddles-toward-a-sustainable-future/', '_blank')" style="cursor: pointer;">
+                                            <span class="extras-item-name">NYU Tandon Concrete Canoe Software Team</span>
                                             
                                         </div>
                                         <div class="extras-item" onclick="window.open('https://imasons.org/ai-incubator/', '_blank')" style="cursor: pointer;">

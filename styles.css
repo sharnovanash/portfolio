@@ -172,7 +172,6 @@ body {
     grid-template-rows: repeat(3, 1fr);
     height: 100%;
     width: 100%;
-    /* Ensure there is no gap between grid cells */
     gap: 0; 
 }
 
@@ -183,7 +182,6 @@ body {
     min-width: 0;
     object-fit: cover; 
     display: block;
-    /* Remove the border to allow images to touch */
     border: none; 
 }
 
@@ -322,15 +320,15 @@ body {
 .hero-meta {
     display: flex; 
     flex-direction: column; 
-    gap: 12px; /* Smaller internal gap for the list items */
+    gap: 12px;
     font-size: 15px; 
     color: #888; 
     font-family: -apple-system, sans-serif;
-    margin: 0; /* Clear margins */
+    margin: 0;
 }
 
 .spotify-credit {
-    margin: 0; /* Clear margins */
+    margin: 0;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -1103,6 +1101,59 @@ body {
 .pd-section ul { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 18px; list-style: disc; }
 .pd-section ul li { color: #999; font-size: 15px; line-height: 1.8; }
 .pd-section ul li strong { color: #ccc; font-weight: 600; }
+
+.pd-code {
+    margin: 18px 0 22px;
+    padding: 18px 22px;
+    background: #000;
+    border: 0.5px solid #1a1a1a;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+.pd-code pre {
+    margin: 0;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #d4d4d4;
+    white-space: pre;
+}
+.pd-code-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.pd-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 18px 0 22px;
+}
+.pd-stat {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 0.5px solid #1a1a1a;
+    border-radius: 6px;
+    min-width: 120px;
+}
+.pd-stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+}
+.pd-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1DB954;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+}
 
 .pd-constraints {
     margin: 26px 0;

@@ -93,6 +93,100 @@
                         </div>
                     </div>
 
+                    <div class="project-card" id="lemontree-card" data-link="https://github.com/Labcoxyzl/MS-CodeToGive-TEAM3" tabindex="0" role="button" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <img src="pictures/lemontreemap.jpg" class="slide-item gallery-skip" alt="Lemontree volunteer platform map of NYC flyering areas">
+                            <img src="pictures/grouppic.jpg" class="slide-item" alt="Code To Give team photo">
+                            <img src="pictures/lemontree2.jpg" class="slide-item" alt="Lemontree platform screenshot">
+                            <img src="pictures/lemontree3.jpg" class="slide-item" alt="Lemontree platform screenshot">
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Selected from 2,200+ applicants to compete among the top 100 at Morgan Stanley's Code To Give Hackathon. Built a full-stack platform for Lemontree, a New York City nonprofit that connects people facing food insecurity to nearby food pantries, soup kitchens, and SNAP benefits through a text helpline and online directory. Our tool gave Lemontree's volunteers a way to find high-priority flyering spots on an interactive NYC map, generate branded flyers with QR signup codes, and track their outreach impact.</p>
+                                <p>[CLICK FOR GITHUB]</p>
+                                <div class="project-skills">
+                                    <span>TypeScript</span> • <span>Next.js</span> • <span>Tailwind CSS</span> • <span>FastAPI</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Morgan Stanley Code To Give: Lemontree Volunteer Platform</div>
+                            <div class="project-caption">Volunteer Outreach Platform For Food Nonprofit</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="The Problem">
+                                <p>Lemontree exists because most people facing food insecurity never actually use the free food available to them. There are more food pantries in the US than McDonald's locations, but most hungry families don't know how close they are, or run into stigma that keeps them from showing up. Lemontree has spent years fighting that gap with a text helpline and online directory that connects people to verified food pantries and SNAP resources with real human support behind it.</p>
+                                <p>None of that works if people never hear about Lemontree in the first place, and that discovery still runs on old-fashioned, on-the-ground volunteer outreach: flyering neighborhoods block by block. Our team spent several days at Code To Give building the tool that outreach was missing, one that told volunteers exactly where flyering would matter most, got flyers into their hands quickly, and made the effort feel worth tracking.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Building The Platform">
+                                <p><strong>Problem:</strong> Volunteers had no way to know where flyering would actually matter, no fast way to produce flyers on the spot, and no reason to see outreach as anything more than an unlogged errand.</p>
+                                <p><strong>What We Created:</strong> A self-serve platform where volunteers open an interactive NYC map of high-priority flyering areas, generate a branded, print-ready flyer with a QR code for each event, and locate a nearby printer. Once out flyering, the app tracks their route in real time, Strava-style, with photo uploads as proof of participation, in-app messaging, and points feeding a public leaderboard. An admin dashboard gives Lemontree staff oversight across events and community moderation.</p>
+                                <p><strong>Outcome:</strong> A tool that let volunteers organize their own outreach without waiting on a coordinator, freeing Lemontree staff to focus on programs instead of managing logistics by hand.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Architecture">
+                                <p><strong>Frontend:</strong> Next.js and TypeScript with Tailwind and MapLibre for the event map, organized around the volunteer journey: signup, dashboard, events, leaderboard, profile, and a separate admin surface.</p>
+                                <p><strong>Backend:</strong> FastAPI, with route modules mirroring those same features. Flyers render server-side via Jinja2 for consistent, print-ready output. Supabase handles Postgres, auth, and storage; deployed on Vercel.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Looking Back">
+                                <p>What stuck with us most was designing for the volunteers actually doing the work rather than an admin dashboard nobody would open, and making outreach feel motivating enough that people would actually want to track it. This was a strong reminder of how much technology can do when it's built for social good, for a nonprofit whose entire mission is making sure people don't go without help that already exists nearby.</p>
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Built for volunteers before staff:</strong> Prioritized the volunteer-facing map and flyer generator over the admin dashboard, since a great back office doesn't matter if nobody in the field wants to open the app.</li>
+                                        <li><strong>Made outreach visible, not just logged:</strong> Chose Strava-style route tracking and a leaderboard over a plain task list, since a checklist gives volunteers no reason to come back.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" id="bouquet-card" data-hide-gallery="true" tabindex="0" role="button" onclick="openProjectDetail(this)">
+                        <div class="slider-wrapper">
+                            <div class="slide-item phone-tile-slide">
+                                <img src="pictures/flowers.jpg" class="card-bg" alt="">
+                                <div class="phone-container">
+                                    <video autoplay loop muted playsinline class="phone-img" aria-label="Fleur bouquet builder demo">
+                                        <source src="pictures/bouquet.mov" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-description">
+                            <div class="description-inner">
+                                <p>Fleur is an iMessage extension built in Swift that lets you design and send custom digital flower arrangements directly within your conversations. Using Apple's Messages Framework, the app embeds an interactive bouquet builder into iMessage, letting you browse, mix, and arrange a collection of blooms in real time. Customize your arrangement, preview it before sending, and deliver a personalized touch straight to someone's messages. No florist required.</p>
+                                <div class="project-skills">
+                                    <span>Swift/Xcode</span> • <span>Figma</span> • <span>UI/UX Design</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-title">Fleur: Send Flowers Over Text</div>
+                            <div class="project-caption">Send Digital Bouquets Over iMessage</div>
+                        </div>
+                        <div class="detail-extra-sections" style="display:none;">
+                            <div class="detail-section" data-nav="The Problem">
+                                <p>While volunteering at a hospital, I learned that fresh flowers were restricted or banned in most units. Standing vase water can grow mold spores, increasing infection risk in ICUs, oncology wards, and transplant units where patients' immune systems are already compromised.</p>
+                                <p>Fleur was my attempt at keeping the gesture without the risk. Sending someone something personal over text usually means a string of words or a generic emoji. Fleur gives that moment something closer to a physical bouquet, arranged and personalized, without either person having to leave the conversation, involve an actual florist, or bring something into a space where real flowers simply aren't allowed.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Building Fleur">
+                                <p><strong>Problem:</strong> Fresh flowers are restricted in most hospital units for infection and allergy reasons, so a gesture that feels universal wasn't available where patients needed it most.</p>
+                                <p><strong>What I Created:</strong> A real iMessage extension built with Apple's Messages Framework, not a separate app someone has to go download. Inside the message compose flow, users browse a collection of blooms, mix and arrange them in real time, preview the finished bouquet, and send it right there in the thread.</p>
+                                <p><strong>Outcome:</strong> A way to send something personal and physical-feeling over text, without leaving the conversation, involving a florist, or bringing something into a space where real flowers aren't allowed.</p>
+                            </div>
+                            <div class="detail-section" data-nav="Architecture">
+                                <p><strong>Platform:</strong> Swift and Xcode using Apple's Messages Framework, embedding directly into iMessage.</p>
+                            
+                                <div class="pd-constraints">
+                                    <div class="pd-constraints-label">Key Tradeoffs</div>
+                                    <ol>
+                                        <li><strong>Designed in Figma before writing Swift:</strong> Prototyped the layout entirely in Figma first, since the constrained iMessage extension space made typical navigation patterns unusable and needed to be solved visually before any code.</li>
+                                        <li><strong>Built inside iMessage over a standalone app:</strong> Chose to build within Apple's Messages Framework instead of a separate downloadable app, since the whole point depended on it living inside a conversation someone was already having, not adding another app to open.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="project-card" id="climate-card" data-link="https://docs.google.com/presentation/d/1HIExQPwsGLpO9c-arP4yWbNSZHmUSoJerGhuw8iaeaA/edit?usp=sharing" tabindex="0" role="button" onclick="openProjectDetail(this)">
                         <div class="slider-wrapper">
                             <img src="pictures/fuel.png" class="slide-item gallery-skip" alt="Clean fuel access and air pollution mortality analysis">
@@ -313,100 +407,6 @@ num_outputs             = 3</pre>
                                     <ol>
                                         <li><strong>Built a custom environment instead of scripting the real game:</strong> took longer upfront, but running 100 agents in parallel was the only way to make NEAT converge quickly.</li>
                                         <li><strong>Capped jump duration deliberately:</strong> sacrifices some realism, but gives a fixed "solved" threshold to compare against.</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" id="lemontree-card" data-link="https://github.com/Labcoxyzl/MS-CodeToGive-TEAM3" tabindex="0" role="button" onclick="openProjectDetail(this)">
-                        <div class="slider-wrapper">
-                            <img src="pictures/lemontreemap.jpg" class="slide-item gallery-skip" alt="Lemontree volunteer platform map of NYC flyering areas">
-                            <img src="pictures/grouppic.jpg" class="slide-item" alt="Code To Give team photo">
-                            <img src="pictures/lemontree2.jpg" class="slide-item" alt="Lemontree platform screenshot">
-                            <img src="pictures/lemontree3.jpg" class="slide-item" alt="Lemontree platform screenshot">
-                        </div>
-                        <div class="project-description">
-                            <div class="description-inner">
-                                <p>Selected from 2,200+ applicants to compete among the top 100 at Morgan Stanley's Code To Give Hackathon. Built a full-stack platform for Lemontree, a New York City nonprofit that connects people facing food insecurity to nearby food pantries, soup kitchens, and SNAP benefits through a text helpline and online directory. Our tool gave Lemontree's volunteers a way to find high-priority flyering spots on an interactive NYC map, generate branded flyers with QR signup codes, and track their outreach impact.</p>
-                                <p>[CLICK FOR GITHUB]</p>
-                                <div class="project-skills">
-                                    <span>TypeScript</span> • <span>Next.js</span> • <span>Tailwind CSS</span> • <span>FastAPI</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-title">Morgan Stanley Code To Give: Lemontree Volunteer Platform</div>
-                            <div class="project-caption">Volunteer Outreach Platform For Food Nonprofit</div>
-                        </div>
-                        <div class="detail-extra-sections" style="display:none;">
-                            <div class="detail-section" data-nav="The Problem">
-                                <p>Lemontree exists because most people facing food insecurity never actually use the free food available to them. There are more food pantries in the US than McDonald's locations, but most hungry families don't know how close they are, or run into stigma that keeps them from showing up. Lemontree has spent years fighting that gap with a text helpline and online directory that connects people to verified food pantries and SNAP resources with real human support behind it.</p>
-                                <p>None of that works if people never hear about Lemontree in the first place, and that discovery still runs on old-fashioned, on-the-ground volunteer outreach: flyering neighborhoods block by block. Our team spent several days at Code To Give building the tool that outreach was missing, one that told volunteers exactly where flyering would matter most, got flyers into their hands quickly, and made the effort feel worth tracking.</p>
-                            </div>
-                            <div class="detail-section" data-nav="Building The Platform">
-                                <p><strong>Problem:</strong> Volunteers had no way to know where flyering would actually matter, no fast way to produce flyers on the spot, and no reason to see outreach as anything more than an unlogged errand.</p>
-                                <p><strong>What We Created:</strong> A self-serve platform where volunteers open an interactive NYC map of high-priority flyering areas, generate a branded, print-ready flyer with a QR code for each event, and locate a nearby printer. Once out flyering, the app tracks their route in real time, Strava-style, with photo uploads as proof of participation, in-app messaging, and points feeding a public leaderboard. An admin dashboard gives Lemontree staff oversight across events and community moderation.</p>
-                                <p><strong>Outcome:</strong> A tool that let volunteers organize their own outreach without waiting on a coordinator, freeing Lemontree staff to focus on programs instead of managing logistics by hand.</p>
-                            </div>
-                            <div class="detail-section" data-nav="Architecture">
-                                <p><strong>Frontend:</strong> Next.js and TypeScript with Tailwind and MapLibre for the event map, organized around the volunteer journey: signup, dashboard, events, leaderboard, profile, and a separate admin surface.</p>
-                                <p><strong>Backend:</strong> FastAPI, with route modules mirroring those same features. Flyers render server-side via Jinja2 for consistent, print-ready output. Supabase handles Postgres, auth, and storage; deployed on Vercel.</p>
-                            </div>
-                            <div class="detail-section" data-nav="Looking Back">
-                                <p>What stuck with us most was designing for the volunteers actually doing the work rather than an admin dashboard nobody would open, and making outreach feel motivating enough that people would actually want to track it. This was a strong reminder of how much technology can do when it's built for social good, for a nonprofit whose entire mission is making sure people don't go without help that already exists nearby.</p>
-                                <div class="pd-constraints">
-                                    <div class="pd-constraints-label">Key Tradeoffs</div>
-                                    <ol>
-                                        <li><strong>Built for volunteers before staff:</strong> Prioritized the volunteer-facing map and flyer generator over the admin dashboard, since a great back office doesn't matter if nobody in the field wants to open the app.</li>
-                                        <li><strong>Made outreach visible, not just logged:</strong> Chose Strava-style route tracking and a leaderboard over a plain task list, since a checklist gives volunteers no reason to come back.</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" id="bouquet-card" data-hide-gallery="true" tabindex="0" role="button" onclick="openProjectDetail(this)">
-                        <div class="slider-wrapper">
-                            <div class="slide-item phone-tile-slide">
-                                <img src="pictures/flowers.jpg" class="card-bg" alt="">
-                                <div class="phone-container">
-                                    <video autoplay loop muted playsinline class="phone-img" aria-label="Fleur bouquet builder demo">
-                                        <source src="pictures/bouquet.mov" type="video/mp4">
-                                    </video>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-description">
-                            <div class="description-inner">
-                                <p>Fleur is an iMessage extension built in Swift that lets you design and send custom digital flower arrangements directly within your conversations. Using Apple's Messages Framework, the app embeds an interactive bouquet builder into iMessage, letting you browse, mix, and arrange a collection of blooms in real time. Customize your arrangement, preview it before sending, and deliver a personalized touch straight to someone's messages. No florist required.</p>
-                                <div class="project-skills">
-                                    <span>Swift/Xcode</span> • <span>Figma</span> • <span>UI/UX Design</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-title">Fleur: Send Flowers Over Text</div>
-                            <div class="project-caption">Send Digital Bouquets Over iMessage</div>
-                        </div>
-                        <div class="detail-extra-sections" style="display:none;">
-                            <div class="detail-section" data-nav="The Problem">
-                                <p>While volunteering at a hospital, I learned that fresh flowers were restricted or banned in most units. Standing vase water can grow mold spores, increasing infection risk in ICUs, oncology wards, and transplant units where patients' immune systems are already compromised.</p>
-                                <p>Fleur was my attempt at keeping the gesture without the risk. Sending someone something personal over text usually means a string of words or a generic emoji. Fleur gives that moment something closer to a physical bouquet, arranged and personalized, without either person having to leave the conversation, involve an actual florist, or bring something into a space where real flowers simply aren't allowed.</p>
-                            </div>
-                            <div class="detail-section" data-nav="Building Fleur">
-                                <p><strong>Problem:</strong> Fresh flowers are restricted in most hospital units for infection and allergy reasons, so a gesture that feels universal wasn't available where patients needed it most.</p>
-                                <p><strong>What I Created:</strong> A real iMessage extension built with Apple's Messages Framework, not a separate app someone has to go download. Inside the message compose flow, users browse a collection of blooms, mix and arrange them in real time, preview the finished bouquet, and send it right there in the thread.</p>
-                                <p><strong>Outcome:</strong> A way to send something personal and physical-feeling over text, without leaving the conversation, involving a florist, or bringing something into a space where real flowers aren't allowed.</p>
-                            </div>
-                            <div class="detail-section" data-nav="Architecture">
-                                <p><strong>Platform:</strong> Swift and Xcode using Apple's Messages Framework, embedding directly into iMessage.</p>
-                            
-                                <div class="pd-constraints">
-                                    <div class="pd-constraints-label">Key Tradeoffs</div>
-                                    <ol>
-                                        <li><strong>Designed in Figma before writing Swift:</strong> Prototyped the layout entirely in Figma first, since the constrained iMessage extension space made typical navigation patterns unusable and needed to be solved visually before any code.</li>
-                                        <li><strong>Built inside iMessage over a standalone app:</strong> Chose to build within Apple's Messages Framework instead of a separate downloadable app, since the whole point depended on it living inside a conversation someone was already having, not adding another app to open.</li>
                                     </ol>
                                 </div>
                             </div>

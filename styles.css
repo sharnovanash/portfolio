@@ -1,14 +1,27 @@
 /* --- BASE & UTILITIES --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* One accent color for the whole site. Change it here and everything follows,
+   including the GitHub contribution graph. */
+:root {
+    --neon: #9ec138;   /* olive accent */
+    --hero-pad: max(32px, 4vw); /* one side margin shared by everything on the cover */
+}
+
 body { 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-    background: #0a0a0a; 
+    background: #121212; 
     color: #ffffff; 
     overflow-x: hidden; 
 }
 
+::selection {
+    background-color: var(--neon);
+    color: #000;
+}
+
 /* --- NAVIGATION --- */
+/* Frosted pill with the active tab filled in */
 .nav { 
     position: fixed; 
     top: 40px; 
@@ -17,12 +30,11 @@ body {
     display: flex; 
     background: rgba(255, 255, 255, 0.08); 
     backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
     border-radius: 50px; 
     padding: 5px; 
     border: 1px solid rgba(255, 255, 255, 0.1);
-    
 }
-.nav.on-light { background: rgba(0, 0, 0, 0.05); border: 1px solid rgba(0, 0, 0, 0.1); }
 .nav-btn { 
     background: transparent; 
     color: #888; 
@@ -37,121 +49,339 @@ body {
     text-transform: uppercase; 
 }
 .nav-btn.active { background: #0a0a0a; color: #fff; }
-.nav.on-light .nav-btn.active { background: #000; color: #fff; }
-.nav-btn:not(.active):hover { color: #1DB954; }
+.nav-btn:not(.active):hover { color: var(--neon); }
+
+/* No focus ring on click; an olive ring only for keyboard users */
+.nav-btn:focus { outline: none; }
+.nav-btn:focus-visible { outline: 2px solid var(--neon); outline-offset: 2px; }
 
 .section { display: none; }
 .section.active { display: block; }
 
 /* --- HERO SECTION --- */
-.hero { 
-    position: relative; 
-    min-height: 100vh; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    padding: 0 80px; 
-    max-width: 1400px; 
-    margin: 0 auto; 
-    /* This gap ensures exactly equal space between H1, Subtext, and Meta */
-    gap: 40px; 
+/* Cover: #121212 background, with the big name in the same olive as the highlights. */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    background: #121212;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    /* top padding clears the fixed nav pill so the name never runs under it */
+    padding: 130px var(--hero-pad) 110px;
 }
 
-/* Glitchy Pixelated Title */
-/* Glitchy Pixelated Title */
-.hero h1 { 
-    font-family: "Arial Black", "Inter", sans-serif;
-    font-size: clamp(4rem, 15vw, 11rem); 
-    font-weight: 900; 
-    line-height: 0.85; 
-    margin: 0; 
-    letter-spacing: 0.01em; 
+/* Hero content sits above the moving glow */
+.hero-name,
+.hero-subtext { position: relative; z-index: 1; }
+.scroll-label { z-index: 1; }
+
+/* Giant stretched name; JS sizes it to fill the width exactly */
+.hero-name {
+    margin: 0 0 0.48em; /* room for the vertical stretch (0.8 line-height x 0.6 extra) */
+    text-align: left;
+    font-family: 'League Gothic', 'Arial Narrow', Impact, sans-serif;
+    font-weight: 400;
+    font-size: 15vw;
+    line-height: 0.8;
+    color: var(--neon);
+    white-space: nowrap;
     text-transform: uppercase;
-    
-    /* NAVY & RED: Red text with a hard Navy shadow */
-    color: #8E9AAF; 
-    text-shadow: 8px 8px 0px #1c2839;
-    
-    transform: scaleX(0.95);
-    transform-origin: left;
+    transform: scaleY(1.6);
+    transform-origin: top left;
+    user-select: none;
 }
+.hero-name span { display: inline-block; }
+
+/* On phones the name splits onto two lines so each word can be big */
+.name-break { display: none; }
 
 .hero-subtext {
-    font-size: clamp(1.5rem, 4.5vw, 3.2rem); 
-    font-weight: 400; 
-    line-height: 1.15; 
-    
+    font-size: clamp(1.1rem, 2.5vw, 2.1rem); 
+    font-weight: 600; 
+    line-height: 1.8; /* Extra height for the highlights */
+    color: #b3b3b3;
 }
+
+/* Three lines: degree, "Developing ... within the", then the target phrase */
+.bracket-highlight,
+.hero-line { display: block; }
 
 /* Bracket Styling */
-.bracket-highlight::before { content: "["; color: #1c2839; margin-right: 1px; font-weight: bold; }
-.bracket-highlight::after { content: "]"; color: #1c2839; margin-left: 1px; font-weight: bold; }
+.bracket-highlight::before { content: "["; color: #4a4a4a; margin-right: 1px; font-weight: bold; }
+.bracket-highlight::after { content: "]"; color: #4a4a4a; margin-left: 1px; font-weight: bold; }
 
-.hero-meta a { 
-    color: #457B9D; /* Steel Navy for links */
-    text-decoration: underline; 
-    text-underline-offset: 4px; 
+/* Pill highlight */
+.pill-highlight {
+    position: relative;
+    background: #222222; 
+    color: var(--neon);      
+    padding: 5px 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    margin: 0 6px;
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 85% 100%, 0% 100%, 0% 0%);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: default;
 }
-/* --- PROJECT GRID & SLIDER --- */
-.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); width: 100%; }
-.project-card { position: relative; aspect-ratio: 16/10; overflow: hidden; background: #000; border: 0.5px solid #1a1a1a; }
+.pill-highlight:hover {
+    transform: rotate(1deg) translateY(-3px) scale(1.05);
+    background: var(--neon);
+    color: #222222;
+}
 
-.slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.8, 0, 0.2, 1); }
-.slide-item { min-width: 100%; height: 100%; object-fit: cover; position: relative; }
+/* Target highlight */
+.target-highlight {
+    position: relative;
+    color: #d9d9d9; /* a step lighter than the surrounding subtext; turns olive on hover */
+    padding: 0 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    transition: all 0.3s ease;
+    cursor: default;
+}
 
-/* Smart Eats Layout Customization */
-.phone-tile-slide { display: flex; width: 100%; height: 100%; background: #000; position: relative; }
-.phone-tile-slide .card-bg { position: absolute; top: 0; left: 0; width: 60%; height: 100%; z-index: 0; filter: brightness(0.5); object-fit: cover; }
-.phone-tile-slide .phone-container { position: absolute; right: 0; top: 0; width: 40%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; z-index: 5; }
-.phone-tile-slide .phone-img { width: 85%; height: 85%; object-fit: contain; }
+/* Brackets that "squeeze" the text on hover */
+.target-highlight::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    border-left: 4px solid #4a4a4a;
+    border-right: 4px solid #4a4a4a;
+    transition: all 0.3s ease;
+}
+.target-highlight:hover::after {
+    left: 5px;
+    right: 5px;
+    border-color: var(--neon);
+    filter: drop-shadow(0 0 5px rgba(158, 193, 56, 0.5));
+}
+.target-highlight:hover {
+    color: var(--neon);
+    letter-spacing: 0.1em;
+}
 
-.project-description { 
-    line-height: 1.7; 
+.scroll-label { 
     position: absolute; 
-    top: 0; left: 0; width: 100%; height: 100%; 
-    background: rgba(0, 0, 0, 0.75); 
-    backdrop-filter: blur(6px); 
-    display: flex; align-items: flex-start; justify-content: flex-end; 
-    padding: 40px; opacity: 1; transition: opacity 0.4s; z-index: 20; text-align: right;
-    pointer-events: none;
+    bottom: 45px;
+    left: var(--hero-pad);
+    font-size: 11px; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 0.25em; 
+    color: #6b6b6b;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: color 0.3s ease;
 }
-.project-card:hover .project-description { opacity: 0; }
-.description-inner { display: none; }
-
-.project-description::before {
+.scroll-label::before {
     content: "";
     width: 2px;
     height: 12px;
-    background: #9ec138;
-    flex-shrink: 0;
-    margin-top: 3px;
-    margin-right: 12px;
+    background: var(--neon);
+    display: inline-block;
+}
+.scroll-label:hover { color: #ffffff; }
+
+@media (max-width: 700px) {
+    .hero { padding-top: 110px; gap: 28px; }
 }
 
-.project-description::after {
-    content: "Click to learn more";
-    color: #535353;
+/* =========================================================
+   PROJECTS — EVEN GRID (dark)
+   Alternating rows of 3 and 2 tiles on a 6-column grid,
+   so every row is full and tiles stay roughly the same size.
+   ========================================================= */
+
+.projects {
+    background: #121212;
+    padding: 0;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 25vw;
+    gap: 0;
+    width: 100%;
+}
+
+.project-card {
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a;
+    border-radius: 0;
+    cursor: pointer;
+    min-height: 0;
+}
+
+/* Rows alternate 3 tiles / 2 tiles, repeating every 5 cards:
+   ┌─────┬─────┬─────┐
+   │  1  │  2  │  3  │
+   ├─────┴──┬──┴─────┤
+   │   4    │   5    │
+   ├─────┬──┴──┬─────┤
+   │  6  │  7  │  8  │
+   ├─────┴──┬──┴─────┤
+   │   9    │   10   │
+   └────────┴────────┘ */
+.project-card:nth-child(5n+1),
+.project-card:nth-child(5n+2),
+.project-card:nth-child(5n+3) { grid-column: span 2; }
+.project-card:nth-child(5n+4),
+.project-card:nth-child(5n+5) { grid-column: span 3; }
+
+/* Media fills the whole tile */
+.slider-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.slide-item {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    filter: brightness(0.85);
+    transition: transform 0.7s cubic-bezier(0.2, 0, 0, 1), filter 0.4s ease;
+}
+
+.project-card:hover .slide-item,
+.project-card:focus-visible .slide-item {
+    transform: scale(1.04);
+    filter: brightness(1);
+}
+
+/* Only the first slide shows on the card. The rest still appear in the
+   detail-page gallery, since openProjectDetail() copies them from the DOM. */
+.slider-wrapper > .slide-item:not(:first-child) {
+    display: none;
+}
+
+/* Cetos Water: keep the right side of the photo in frame */
+#cetos-card .slide-item {
+    object-position: right center;
+    transform-origin: right center;
+}
+
+/* Fleur: pure black behind the phone video */
+#bouquet-card .slider-wrapper,
+#bouquet-card .phone-tile-slide,
+#bouquet-card .phone-tile-slide .phone-container {
+    background: #000;
+}
+
+/* Phone-tile layout (Fleur, Smart Eats) */
+.phone-tile-slide { display: flex; width: 100%; height: 100%; background: #000; position: relative; }
+.phone-tile-slide .card-bg { position: absolute; top: 0; left: 0; width: 60%; height: 100%; z-index: 0; filter: brightness(0.5); object-fit: cover; }
+.phone-tile-slide .phone-container { position: absolute; right: 0; top: 0; width: 40%; height: 100%; background: #0d0d0d; display: flex; justify-content: center; align-items: center; z-index: 5; }
+.phone-tile-slide .phone-img { width: 85%; height: 85%; object-fit: contain; }
+
+/* Description text stays in the DOM for openProjectDetail(), hidden on the card */
+.project-description { display: none; }
+
+/* Caption overlaid on the bottom of each tile */
+.project-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 25;
+    padding: 56px 20px 18px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.45) 55%, transparent 100%);
+    pointer-events: none;
+}
+
+.project-title {
+    display: block;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 4px;
+    text-wrap: balance;
+}
+
+.project-caption {
+    display: block;
+    font-family: 'Geist', -apple-system, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #a8a8a8;
+}
+
+/* "View project" slides in on hover or keyboard focus */
+.project-info::after {
+    content: "View project";
+    display: block;
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    font-family: 'Geist', -apple-system, sans-serif;
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--neon);
+    transition: max-height 0.3s ease, margin-top 0.3s ease, opacity 0.3s ease;
 }
 
-.project-info { 
-    position: absolute; bottom: 0; left: 0; right: 0; padding: 40px; 
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); 
-    z-index: 25; pointer-events: none; transition: 0.4s; 
+.project-card:hover .project-info::after,
+.project-card:focus-visible .project-info::after {
+    max-height: 20px;
+    margin-top: 8px;
+    opacity: 1;
 }
-.project-title { font-size: 22px; margin-bottom: 5px; }
-.project-tags { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+.project-card:focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .slide-item, .project-info::after { transition: none; }
+    .project-card:hover .slide-item,
+    .project-card:focus-visible .slide-item { transform: none; }
+}
+
+/* Tablet: even 2-column grid */
+@media (max-width: 1000px) {
+    .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 36vw;
+    }
+    .project-grid .project-card { grid-column: span 1; }
+}
+
+/* Phone: single column */
+@media (max-width: 600px) {
+    .project-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 70vw;
+    }
+}
 
 
 /* --- ABOUT SECTION --- */
 .about-section { 
     min-height: 100vh; 
-    background: #121212; /* Spotify deep black */
+    background: #121212;
     color: #ffffff; 
-    overflow: hidden; 
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .about-container { 
@@ -159,6 +389,13 @@ body {
     grid-template-columns: 1fr 1fr; 
     min-height: 100vh; 
 }
+
+.about-hi-again {
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
 .about-image-stack { 
     height: 100%; 
     min-height: 100vh;
@@ -183,51 +420,71 @@ body {
     object-fit: cover; 
     display: block;
     border: none; 
+    filter: brightness(0.7);
+    transition: transform 0.4s cubic-bezier(0.3, 0, 0, 1), filter 0.3s ease;
 }
 
-/* Glassmorphism panel using Spotify color tones */
+.image-grid img:hover {
+    transform: scale(1.05);
+    filter: brightness(1);
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
 .about-content { 
-    background: rgba(18, 18, 18, 0.85); 
+    position: relative;
+    background: #121212;
     display: flex; 
     justify-content: center; 
     align-items: center; 
     padding: 80px; 
+    overflow: hidden;
 }
 
-.content-wrapper { max-width: 500px; width: 100%; }
+/* Moving mesh gradient background (shared by the hero, About and Extras panels) */
+.hero::before,
+.about-content::before,
+.extras-content::before {
+    content: "";
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(158, 193, 56, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 70% 60%, rgba(158, 193, 56, 0.06) 0%, transparent 40%);
+    animation: mesh-flow 20s linear infinite;
+    z-index: 0;
+}
+
+@keyframes mesh-flow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero::before,
+    .about-content::before,
+    .extras-content::before { animation: none; }
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+    width: 100%;
+}
 
 #about-greeting {
     margin-bottom: 40px;
-    display: flex; align-items: center;
-    font-size: 36px; 
+    font-size: 36px;
+    font-weight: 700;
     color: #ffffff;
 }
 
-/* Secondary text color matches Spotify's artist bios */
 .bio-text p { 
     font-size: 14px; 
     line-height: 1.85; 
     margin-bottom: 25px; 
     color: #b3b3b3; 
-}
-
-/* Dividers match the Spotify Desktop app list style */
-.experience-list { 
-    margin-top: 40px; 
-    border-top: 1px solid #282828; 
-}
-
-.experience-item { 
-    display: flex; 
-    justify-content: space-between; 
-    padding: 15px 0; 
-    border-bottom: 1px solid #282828; 
-    font-size: 13px; 
-    color: #b3b3b3; 
-}
-
-.experience-item strong { 
-    color: #ffffff; 
 }
 
 .github-contrib { margin-top: 40px; }
@@ -245,27 +502,79 @@ body {
 
 .github-contrib-card {
     display: block;
+    text-decoration: none;
+    color: inherit;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid #282828;
-    padding: 22px;
-    border-radius: 8px;
+    padding: 26px 28px;
+    border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s cubic-bezier(0.3,0,0,1), border-color 0.3s;
 }
-
 .github-contrib-card:hover { transform: scale(1.02); border-color: #3a3a3a; }
 
-.github-contrib-img {
-    display: block;
-    width: 100%;
-    filter: invert(93%) hue-rotate(180deg) contrast(0.92);
+/* Contribution graph drawn from the API data, shaded in the accent color */
+/* Corner | month labels
+   Days   | grid           */
+.contrib-graph {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 8px;
+    row-gap: 6px;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 8px; /* small, like GitHub's own graph, but still readable on non-Retina screens */
+    font-weight: 400;
+    color: #8b8b8b;
 }
+
+.contrib-months {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    column-gap: 2px;
+    line-height: 1;
+}
+.contrib-months span { white-space: nowrap; }
+
+.contrib-days {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    gap: 2px;
+    /* Take the grid's height instead of adding to it, so labels don't stretch the rows */
+    height: 0;
+    min-height: 100%;
+}
+.contrib-days span { display: flex; align-items: center; line-height: 1; }
+
+.contrib-grid {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 2px;
+}
+
+/* Empty days are visible gray; active days are the accent darkened with black,
+   which keeps the olive saturated instead of turning it muddy */
+.contrib-cell { aspect-ratio: 1; border-radius: 1px; background: #262626; }
+.contrib-cell.is-pad { background: transparent; }
+.contrib-cell[data-level="1"] { background: color-mix(in srgb, var(--neon) 34%, #000); }
+.contrib-cell[data-level="2"] { background: color-mix(in srgb, var(--neon) 48%, #000); }
+.contrib-cell[data-level="3"] { background: color-mix(in srgb, var(--neon) 64%, #000); }
+.contrib-cell[data-level="4"] { background: color-mix(in srgb, var(--neon) 85%, #fff); }
+
+/* Hide the card if the API is down instead of showing an empty box */
+.github-contrib-card:has(.contrib-grid:empty) { display: none; }
 
 .contact-links { display: flex; gap: 30px; margin-top: 35px; align-items: center; }
 
-/* Links pop with Spotify Green */
 .contact-links a {
-    color: #1DB954; 
+    color: var(--neon); 
     font-weight: 700; 
     text-decoration: none;
     font-size: 13px; 
@@ -274,433 +583,20 @@ body {
     border-bottom: 2px solid transparent; 
     transition: 0.3s;
 }
-
 .contact-links a:hover { 
     color: #ffffff;
-    border-bottom: 2px solid #1DB954; 
+    border-bottom: 2px solid var(--neon); 
 }
 
-
-/* --- THE SPOTIFY HERO --- */
-
-/* --- CONSOLIDATED SPOTIFY HERO --- */
-
-.hero {
-    position: relative; 
-    min-height: 100vh; 
-    background: #121212; 
-    padding: 0 80px; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* This ONE value controls the equal spacing between all 4 parts */
-    gap: 50px; 
-    max-width: 1400px; 
-    margin: 0 auto; 
-}
-
-.spotify-title {     /* chnages size of big name */
-    font-family: "Arial Black", sans-serif;
-    font-size: clamp(4rem, 12vw, 8.5rem);
-    line-height: 0.9;
-    letter-spacing: -0.05em;
-    color: #1DB954; 
-    text-transform: uppercase;
-    margin: 0; /* Clear margins to let gap work */
-}
-
-.hero-subtext {
-    /* original was 2.1rem max, now 1.6rem */
-    font-size: clamp(1.1rem, 2.5vw, 2.1rem); 
-    font-weight: 600; 
-    line-height: 1.8; /* Extra height for the highlights */
-    color: #ffffff;
-}
-
-.hero-meta {
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px;
-    font-size: 15px; 
-    color: #888; 
-    font-family: -apple-system, sans-serif;
-    margin: 0;
-}
-
-.spotify-credit {
-    margin: 0;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #535353;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-}
-
-/* Ensure the Spotify icon is a clean circle */
-
-
-/* --- SPOTIFY HIGHLIGHTS --- */
-
-/* 1. THE PILL (The Heavy Anchor) */
-.pill-highlight {
-    position: relative;
-    background: #222222; 
-    color: #9ec138;      
-    padding: 5px 14px;
-    font-weight: 800;
-    text-transform: uppercase;
-    display: inline-block;
-    margin: 0 10px;
-    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 85% 100%, 0% 100%, 0% 0%);
-    
-    /* Smooth, bouncy transition for a "fun" feel */
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: crosshair;
-}
-/*Box*/
-.pill-highlight:hover {
-    transform: rotate(1deg) translateY(-3px) scale(1.05);
-    background: #9ec138;;
-    color: #222222;
-}
-
-
-/* 3. THE TARGET (The Precision Detail) */
-.target-highlight {
-    position: relative;
-    color: #9ec138;
-    padding: 0 15px;
-    font-weight: 800;
-    text-transform: uppercase;
-    display: inline-block;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-/* Brackets that "squeeze" the text on hover */
-.target-highlight::after {
-    content: "";
-    position: absolute;
-    top: -5px;
-    bottom: -5px;
-    left: 0;
-    right: 0;
-    border-left: 4px solid #1c2839;
-    border-right: 4px solid #1c2839;
-    transition: all 0.3s ease;
-}
-
-.target-highlight:hover::after {
-    left: 5px;
-    right: 5px;
-    border-color: #b7b3b3;
-    filter: drop-shadow(0 0 5px #b7b3b3);
-}
-
-.target-highlight:hover {
-    color: #1DB954;
-    letter-spacing: 0.1em; /* Text expands slightly */
-}
-/* --- META INFO: ORIGINAL FONT & SIZE --- */
-.hero-meta {
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px; 
-    font-size: 15px; /* Your original size */
-    color: #888; /* Your original gray */
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; /* Your original font */
-}
-
-.hero-meta a { 
-    color: #888; 
-    text-decoration: underline; 
-    text-underline-offset: 4px; 
-}
-
-.hero-meta a:hover {
-    color: #1DB954;
-}
-
-.scroll-label { 
-    position: absolute; 
-    bottom: 45px; /* Aligns with the bottom of the viewport padding */
-    left: 80px;   /* Matches your .hero horizontal padding */
-    font-size: 11px; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    letter-spacing: 0.25em; 
-    color: #535353; /* Faded gray like Spotify's inactive UI elements */
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: color 0.3s ease;
-}
-
-/* Spotify-style Green Indicator */
-.scroll-label::before {
-    content: "";
-    width: 2px;
-    height: 12px;
-    background: #9ec138; /* Spotify Green */
-    display: inline-block;
-}
-
-/* Subtle hover effect for the label */
-.scroll-label:hover {
-    color: #ffffff;
-}
-
-.hero-meta span {
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.hero-meta span:hover::before {
-    content: "▶";
-    color: #1DB954;
-    margin-right: 10px;
-    font-size: 12px;
-}
-
-.hero-meta span:hover {
-    color: #ffffff;
-    padding-left: 5px; /* Slight nudge for interactivity */
-}
-
-/* Progress Bar for your Meta Info */
-.hero-meta span:first-child {
-    color: #1DB954; /* Highlight current "track" (NYU) */
-    position: relative;
-}
-
-.hero-meta::after {
-    content: "";
-    width: 200px;
-    height: 4px;
-    background: #282828; /* Dark gray track */
-    border-radius: 2px;
-    margin-top: 10px;
-    display: block;
-    position: relative;
-}
-
-/* The Green "Progress" Indicator */
-.hero-meta::before {
-    content: "";
-    width: 60px; /* How much of the "track" is played */
-    height: 4px;
-    background: #1DB954;
-    border-radius: 2px;
-    position: absolute;
-    bottom: -14px; /* Align with the track above */
-    z-index: 1;
-}
-
-::selection {
-    background-color: #1DB954;
-    color: #000;
-}
-
-.track-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background 0.3s;
-}
-
-.track-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.track-duration {
-    font-family: monospace;
-    color: #b3b3b3;
-    font-size: 14px;
-}
-
-.experience-item {
-    padding: 15px 16px;
-    border-radius: 5px;
-    transition: var(--transition-smooth);
-}
-
-.experience-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    cursor: pointer;
-}
-
-.experience-item:hover strong {
-    color: var(--spotify-green); 
-}
-
-.image-grid img {
-    transition: transform 0.4s cubic-bezier(0.3, 0, 0, 1), filter 0.3s ease;
-    filter: brightness(0.7); /* Darker by default */
-}
-
-.image-grid img:hover {
-    transform: scale(1.05); /* Slight zoom */
-    filter: brightness(1);   /* Brightens on hover */
-    z-index: 10;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.np-left { display: flex; align-items: center; gap: 14px; width: 30%; }
-.np-avatar { width: 56px; height: 56px; border-radius: 4px; object-fit: cover; }
-.np-title { font-size: 14px; font-weight: 600; color: #fff; }
-.np-artist { font-size: 11px; color: #b3b3b3; margin-top: 4px; }
-
-.np-center { width: 40%; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.playback-controls { display: flex; gap: 24px; color: #b3b3b3; font-size: 18px; }
-.play-btn { color: #fff; transform: scale(1.2); }
-.progress-container { display: flex; align-items: center; gap: 8px; width: 100%; }
-.progress-track { flex-grow: 1; height: 4px; background: #4d4d4d; border-radius: 2px; position: relative; }
-.progress-fill { width: 65%; height: 100%; background: #1DB954; border-radius: 2px; }
-.time { font-size: 11px; color: #b3b3b3; min-width: 30px; }
-
-.np-right { width: 30%; display: flex; justify-content: flex-end; color: #b3b3b3; font-size: 12px; }
-
-.about-content {
-    position: relative;
-    background: #121212;
-    overflow: hidden;
-}
-
-/* Moving Mesh Gradient Background */
-.about-content::before {
-    content: "";
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 30%, rgba(29, 185, 84, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 70% 60%, rgba(61, 145, 244, 0.05) 0%, transparent 40%);
-    animation: mesh-flow 20s linear infinite;
-    z-index: 0;
-}
-
-@keyframes mesh-flow {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.content-wrapper {
-    position: relative;
-    z-index: 1; /* Sits above the gradient */
-}
-
-.status-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.scroll-hint {
     margin-left: auto;
     padding-left: 20px;
     border-left: 1px solid #282828;
-    align-self: center;
-}
-
-.pulse-dot {
-    width: 8px;
-    height: 8px;
-    background-color: #1DB954;
-    border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.7);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(29, 185, 84, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(29, 185, 84, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(29, 185, 84, 0); }
-}
-
-.now-playing-status {
-    display: flex;
-    flex-direction: column;
-}
-
-.status-label {
-    font-size: 8px;
-    letter-spacing: 0.2em;
-    color: #b3b3b3;
-    font-weight: 800;
-}
-
-.marquee-container {
-    width: 180px; /* Limits width to force the scroll */
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-
-.track-name {
-    display: inline-block;
-    font-size: 12px;
-    color: #fff;
-    font-weight: 500;
-    padding-left: 100%; /* Start off-screen */
-    animation: marquee 15s linear infinite;
-}
-
-@keyframes marquee {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
-}
-
-
-.spotify-attribution span {
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: #b3b3b3;
-}
-
-/* --- ABOUT SECTION: SCROLLABLE LAYOUT --- */
-.about-section {
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-/* First panel: the Hi Again split-layout, full viewport height */
-.about-hi-again {
-    min-height: 100vh;
-    position: sticky;
-    top: 0;
-}
-
-/* Scroll hint at the bottom of the Hi Again content */
-.scroll-more-hint {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-top: 32px;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: #535353;
-}
-
-.scroll-more-line {
-    width: 2px;
-    height: 24px;
-    background: #1DB954;
-    border-radius: 2px;
-    animation: bob 1.8s ease-in-out infinite;
-}
-
-@keyframes bob {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50%       { transform: translateY(6px); opacity: 0.5; }
+    color: #8b8b8b;
 }
 
 /* ── Extras section — split panel matching about-container ── */
@@ -715,7 +611,6 @@ body {
     min-height: 100vh;
 }
 
-/* LEFT: ball.gif grid — mirrors .about-image-stack */
 .extras-image-stack {
     height: 100%;
     min-height: 100vh;
@@ -751,31 +646,14 @@ body {
     z-index: 10;
 }
 
-/* --- MILK TOOLTIP TILE (fix) --- */
-/* .ball-grid img targets <img> directly by selector, so once the milk photo
-   got wrapped in a div (to hold the tooltip span), it fell outside that rule
-   and lost its sizing + hover treatment. This restores both, and adds the
-   actual tooltip element, which had no styles at all before. */
+/* Milk tooltip tile */
 .ball-grid-tooltip-wrap {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
-
-.ball-grid-tooltip-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    filter: brightness(0.75);
-    transition: transform 0.4s cubic-bezier(0.3, 0, 0, 1), filter 0.3s ease;
-}
-
-.ball-grid-tooltip-wrap:hover {
-    z-index: 10;
-}
-
+.ball-grid-tooltip-wrap:hover { z-index: 10; }
 .ball-grid-tooltip-wrap:hover img {
     transform: scale(1.05);
     filter: brightness(1);
@@ -800,13 +678,11 @@ body {
     transition: opacity 0.25s ease, transform 0.25s ease;
     z-index: 20;
 }
-
 .ball-grid-tooltip-wrap:hover .ball-grid-tooltip {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
 
-/* RIGHT: content — mirrors .about-content */
 .extras-content {
     position: relative;
     background: #121212;
@@ -817,18 +693,6 @@ body {
     padding: 80px;
 }
 
-/* Subtle green glow, same as about-content::before */
-.extras-content::before {
-    content: "";
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 30%, rgba(29, 185, 84, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 70% 60%, rgba(61, 145, 244, 0.05) 0%, transparent 40%);
-    animation: mesh-flow 20s linear infinite;
-    z-index: 0;
-}
-
 .extras-content-wrapper {
     position: relative;
     z-index: 1;
@@ -836,35 +700,25 @@ body {
     width: 100%;
 }
 
-.extras-header {
-    margin-bottom: 40px;
-}
+.extras-header { margin-bottom: 32px; }
+.extras-col + .extras-col { margin-top: 36px; }
 
 .extras-title {
-    font-family: "Arial Black", sans-serif;
+    font-family: "Arial Black", "Arial Bold", Arial, sans-serif;
     font-size: 40px;
     font-weight: 900;
-    color: #1DB954;
+    color: var(--neon);
     line-height: 0.9;
     letter-spacing: -0.03em;
     text-transform: uppercase;
-    margin-bottom: 16px;
-}
-
-.extras-subtitle {
-    font-size: 13px;
-    color: #535353;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-weight: 600;
 }
 
 .extras-col-label {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.25em;
-    color: #1DB954;
+    color: var(--neon);
     margin-bottom: 0;
 }
 
@@ -873,7 +727,6 @@ body {
     margin-top: 12px;
 }
 
-/* Each row: name left, date right — mirrors .experience-item */
 .extras-item {
     display: flex;
     justify-content: space-between;
@@ -886,8 +739,16 @@ body {
     transition: background 0.2s;
     cursor: default;
 }
+.extras-item-link:hover { background: rgba(255, 255, 255, 0.07); }
 
-.extras-item:hover {
+/* Linked rows (Concrete Canoe, Infrastructure Masons) */
+.extras-item-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+.extras-item-link:focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: -2px;
     background: rgba(255, 255, 255, 0.07);
 }
 
@@ -896,13 +757,10 @@ body {
     color: #b3b3b3;
     line-height: 1.4;
 }
-
-.extras-item-name strong {
-    color: #ffffff;
-}
+.extras-item-name strong { color: #ffffff; }
 
 .extras-item-detail {
-    color: #535353;
+    color: #7a7a7a;
     font-weight: 400;
 }
 
@@ -914,9 +772,23 @@ body {
     flex-shrink: 0;
 }
 
-/* --- PROJECT DETAIL OVERLAY --- */
-.project-card { cursor: pointer; }
+/* Footer pinned to the bottom of the & More panel.
+   Absolutely positioned so it adds no height and the photo grid keeps its shape. */
+.site-footer {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(500px, calc(100% - 160px)); /* lines up with .extras-content-wrapper */
+    z-index: 1;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #6b6b6b;
+}
 
+/* --- PROJECT DETAIL OVERLAY --- */
 .project-detail-overlay {
     position: fixed;
     inset: 0;
@@ -924,11 +796,16 @@ body {
     background: #0a0a0a;
     overflow-y: auto;
     overflow-x: hidden;
+    scroll-snap-type: y proximity;
     opacity: 0;
     visibility: hidden;
     transform: translateY(24px);
     transition: opacity 0.4s cubic-bezier(0.3,0,0,1), transform 0.4s cubic-bezier(0.3,0,0,1), visibility 0.4s;
     font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .project-detail-overlay { scroll-behavior: smooth; }
 }
 
 .project-detail-overlay.active {
@@ -966,11 +843,11 @@ body {
     cursor: pointer;
     transition: 0.25s;
 }
-.pd-back:hover { color: #fff; border-color: #1DB954; }
+.pd-back:hover { color: #fff; border-color: var(--neon); }
 .pd-back svg { width: 12px; height: 12px; }
 
 .pd-link-top {
-    color: #1DB954;
+    color: var(--neon);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -979,7 +856,7 @@ body {
     border-bottom: 2px solid transparent;
     transition: 0.25s;
 }
-.pd-link-top:hover { border-bottom-color: #1DB954; }
+.pd-link-top:hover { border-bottom-color: var(--neon); }
 
 .pd-hero {
     max-width: 1100px;
@@ -1004,7 +881,7 @@ body {
     font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #1DB954;
+    color: var(--neon);
 }
 
 .pd-meta {
@@ -1063,7 +940,7 @@ body {
 
 .pd-sidebar a {
     font-size: 13px;
-    color: #545454;
+    color: #6b6b6b;
     text-decoration: none;
     font-weight: 500;
     letter-spacing: 0.01em;
@@ -1072,16 +949,9 @@ body {
     border-left: 2px solid transparent;
 }
 .pd-sidebar a:hover { color: #b3b3b3; }
-.pd-sidebar a.active { color: #1DB954; border-left-color: #1DB954; }
+.pd-sidebar a.active { color: var(--neon); border-left-color: var(--neon); }
 
-.pd-sidebar a.pd-sidebar-hint {
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    font-size: 11px;
-}
-
-.pd-section { margin-bottom: 50px; }
+.pd-section { margin-bottom: 50px; scroll-margin-top: 110px; }
 .pd-section:last-child { margin-bottom: 0; }
 
 .pd-section-title {
@@ -1151,14 +1021,15 @@ body {
 .pd-stat-value {
     font-size: 18px;
     font-weight: 700;
-    color: #1DB954;
+    color: var(--neon);
     font-family: 'SFMono-Regular', Consolas, monospace;
 }
 
+/* Key Tradeoffs box */
 .pd-constraints {
     margin: 26px 0;
     padding: 22px 26px;
-    border-left: 2px solid #1DB954;
+    border-left: 2px solid var(--neon);
     background: rgba(255,255,255,0.03);
 }
 .pd-constraints-label {
@@ -1166,21 +1037,9 @@ body {
     font-weight: 800;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #1DB954;
+    color: var(--neon);
     margin-bottom: 12px;
 }
-.pd-constraints ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-.pd-constraints li {
-    color: #fff;
-    font-weight: 600;
-    font-size: 15px;
-}
-
 .pd-constraints ol {
     list-style: none;
     counter-reset: tradeoff;
@@ -1204,7 +1063,7 @@ body {
     position: absolute;
     left: 0;
     top: 0;
-    color: #1DB954;
+    color: var(--neon);
     font-weight: 700;
     font-size: 14px;
 }
@@ -1213,31 +1072,9 @@ body {
     font-weight: 600;
 }
 
+/* --- DETAIL GALLERY --- */
 .pd-full-bleed { width: 100%; padding-top: 40px; }
 #project-detail-overlay[data-card="lemontree-card"] .pd-full-bleed { padding-top: 10px; }
-
-.pd-full-bleed-header {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 40px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.pd-full-bleed-header::before {
-    content: "";
-    width: 2px;
-    height: 12px;
-    background: #1DB954;
-    display: inline-block;
-}
-.pd-scroll-hint {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: #535353;
-}
 .pd-full-bleed-section.pd-section { margin-bottom: 0; }
 
 .pd-gallery {
@@ -1324,9 +1161,6 @@ body {
     scroll-snap-align: none;
     overflow: hidden;
 }
-/* The video tile is marked with pd-gallery-item-natural (via the
-   gallery-natural class on the <video> itself) so it sizes to its own
-   aspect ratio instead of being squeezed into an equal-width slot. */
 .pd-gallery.pd-gallery-row .pd-gallery-item.pd-gallery-item-natural {
     flex: 0 0 auto;
     height: 42vh;
@@ -1340,8 +1174,6 @@ body {
     display: block;
 }
 
-.project-detail-overlay { scroll-snap-type: y proximity; }
-
 @media (max-width: 900px) {
     .pd-meta { grid-template-columns: 1fr; gap: 30px; }
     .pd-body { grid-template-columns: 1fr; gap: 30px; }
@@ -1354,7 +1186,7 @@ body {
         padding-bottom: 24px;
     }
     .pd-sidebar a { padding-left: 0; border-left: none; border-bottom: 2px solid transparent; padding-bottom: 4px; }
-    .pd-sidebar a.active { border-left: none; border-bottom-color: #1DB954; }
+    .pd-sidebar a.active { border-left: none; border-bottom-color: var(--neon); }
     .pd-gallery-item { height: 70vh; }
     .pd-gallery.pd-gallery-grid-5 {
         grid-template-columns: repeat(2, 1fr);
@@ -1375,4 +1207,52 @@ body {
         height: 100%;
         object-fit: contain;
     }
+}
+
+/* =========================================================
+   SMALL SCREENS
+   ========================================================= */
+
+/* About and & More stack: photos on top, text below */
+@media (max-width: 900px) {
+    .about-container,
+    .extras-container {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+    .about-hi-again { position: relative; min-height: 0; }
+    .about-image-stack,
+    .extras-image-stack {
+        position: relative;
+        min-height: 0;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+    .about-content,
+    .extras-content { padding: 56px 24px; }
+    .extras-content { padding-bottom: 96px; } /* room for the footer */
+    .site-footer { width: calc(100% - 48px); }
+    .scroll-hint { display: none; } /* the stacked page already reads as scrollable */
+}
+
+@media (max-width: 600px) {
+    .name-break { display: inline; }
+    .hero-name { margin-bottom: 0.96em; } /* two lines x 0.8 line-height x 0.6 extra stretch */
+
+    .nav { top: 16px; right: 16px; }
+    .nav-btn { padding: 9px 18px; }
+
+    #about-greeting { font-size: 30px; }
+    .extras-title { font-size: 34px; }
+    .contact-links { flex-wrap: wrap; gap: 16px 24px; }
+    .extras-item { padding: 14px 8px; }
+
+    .github-contrib-card { padding: 18px 16px; }
+    .contrib-graph { column-gap: 6px; }
+
+    .pd-topbar { padding: 16px 20px; }
+    .pd-hero { padding: 64px 20px 48px; }
+    .pd-meta { padding: 0 20px 56px; }
+    .pd-body { padding: 48px 20px 32px; }
+    .pd-gallery { padding: 0 20px; }
 }
